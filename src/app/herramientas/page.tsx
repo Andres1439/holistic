@@ -404,28 +404,28 @@ export default function HerramientasPage() {
   const avgNoUbicados = totalDeliveries > 0 ? (totalNoUbicados / totalDeliveries) * 100 : 4.7
 
   return (
-    <div className="min-h-screen bg-f2 pb-14 w-full overflow-x-hidden">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="border-b border-primary-medium/20 bg-primary-dark/80 backdrop-blur-sm w-full">
+      <header className="border-b border-gray-200 bg-white w-full">
         <div className="px-2 sm:px-6 lg:px-8 py-4 w-full">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Link href="/" className="flex items-center group">
-                <div className="h-8 w-8 bg-gradient-to-r from-accent to-primary-medium rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                  <ShoppingCart className="h-5 w-5 text-primary-light" />
+                <div className="h-8 w-8 bg-blue-100 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                  <ShoppingCart className="h-5 w-5 text-blue-700" />
                 </div>
-                <span className="ml-3 text-xl font-bold text-primary-light group-hover:text-accent transition-colors duration-300">
+                <span className="ml-3 text-xl font-bold text-blue-700 group-hover:text-blue-500 transition-colors duration-300">
                   HOLISTIC
                 </span>
               </Link>
               <div className="hidden sm:block">
-                <Badge variant="outline" className="border-accent/30 text-primary-dark bg-primary-light/60">
+                <Badge variant="outline" className="border-blue-200 text-blue-700 bg-blue-50">
                   Herramientas
                 </Badge>
               </div>
             </div>
             <Link href="/">
-              <Button variant="outline" className="border-accent/30 text-accent hover:bg-accent hover:text-white">
+              <Button variant="outline" className="border-blue-300 text-blue-700 hover:bg-blue-100 hover:text-blue-900">
                 <Home className="h-4 w-4 mr-2" />
                 Volver al Inicio
               </Button>
@@ -436,68 +436,68 @@ export default function HerramientasPage() {
 
       <div className="flex min-h-screen">
         {/* Sidebar */}
-        <div className="w-64 bg-primary-dark/90 border-r border-primary-medium/20 p-4 hidden lg:block">
+        <div className="w-64 bg-white border-r border-gray-200 p-4 hidden lg:block">
           <nav className="space-y-2">
             <button
               onClick={() => setActiveTab("dashboard")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "dashboard"
-                  ? "bg-accent text-e9 font-semibold border border-e9"
-                  : "text-e9/70 hover:bg-primary-medium/30 hover:text-e9"
+                  ? "bg-blue-600 text-white font-semibold border border-blue-600"
+                  : "text-blue-700 hover:bg-blue-50 hover:text-blue-900"
               }`}
             >
-              <Home className="h-5 w-5" />
+              <Home className={`h-5 w-5 ${activeTab === "dashboard" ? "text-white" : "text-blue-700"}`} />
               <span>Dashboard</span>
             </button>
             <button
               onClick={() => setActiveTab("campanas")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "campanas"
-                  ? "bg-accent text-e9 font-semibold border border-e9"
-                  : "text-e9/70 hover:bg-primary-medium/30 hover:text-e9"
+                  ? "bg-blue-600 text-white font-semibold border border-blue-600"
+                  : "text-blue-700 hover:bg-blue-50 hover:text-blue-900"
               }`}
             >
-              <Target className="h-5 w-5" />
+              <Target className={`h-5 w-5 ${activeTab === "campanas" ? "text-white" : "text-blue-700"}`} />
               <span>Campañas</span>
             </button>
             <button
               onClick={() => setActiveTab("entregas")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "entregas"
-                  ? "bg-accent text-e9 font-semibold border border-e9"
-                  : "text-e9/70 hover:bg-primary-medium/30 hover:text-e9"
+                  ? "bg-blue-600 text-white font-semibold border border-blue-600"
+                  : "text-blue-700 hover:bg-blue-50 hover:text-blue-900"
               }`}
             >
-              <Truck className="h-5 w-5" />
+              <Truck className={`h-5 w-5 ${activeTab === "entregas" ? "text-white" : "text-blue-700"}`} />
               <span>Entregas</span>
             </button>
             <button
               onClick={() => setActiveTab("calculadora")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "calculadora"
-                  ? "bg-accent text-e9 font-semibold border border-e9"
-                  : "text-e9/70 hover:bg-primary-medium/30 hover:text-e9"
+                  ? "bg-blue-600 text-white font-semibold border border-blue-600"
+                  : "text-blue-700 hover:bg-blue-50 hover:text-blue-900"
               }`}
             >
-              <Calculator className="h-5 w-5" />
+              <Calculator className={`h-5 w-5 ${activeTab === "calculadora" ? "text-white" : "text-blue-700"}`} />
               <span>Calculadora</span>
             </button>
             <button
               onClick={() => setActiveTab("historial")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "historial"
-                  ? "bg-accent text-e9 font-semibold border border-e9"
-                  : "text-e9/70 hover:bg-primary-medium/30 hover:text-e9"
+                  ? "bg-blue-600 text-white font-semibold border border-blue-600"
+                  : "text-blue-700 hover:bg-blue-50 hover:text-blue-900"
               }`}
             >
-              <History className="h-5 w-5" />
+              <History className={`h-5 w-5 ${activeTab === "historial" ? "text-white" : "text-blue-700"}`} />
               <span>Historial</span>
             </button>
           </nav>
         </div>
 
         {/* Mobile Navigation */}
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-primary-dark/90 backdrop-blur-sm border-t border-primary-medium/20 z-50">
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
           <div className="flex justify-around py-2">
             {[
               { id: "dashboard", icon: Home, label: "Dashboard" },
@@ -510,7 +510,7 @@ export default function HerramientasPage() {
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
                 className={`flex flex-col items-center space-y-1 px-3 py-2 rounded-lg transition-all duration-300 ${
-                  activeTab === item.id ? "text-accent" : "text-white/70 hover:text-accent"
+                  activeTab === item.id ? "text-accent" : "text-gray-600 hover:text-accent"
                 }`}
               >
                 <item.icon className="h-5 w-5" />
@@ -527,11 +527,11 @@ export default function HerramientasPage() {
             <div className="space-y-6 animate-fade-in">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h1 className="text-2xl sm:text-3xl font-bold text-primary-dark mb-2">Dashboard General</h1>
-                  <p className="text-primary-medium">Resumen de métricas actualizadas</p>
+                  <h1 className="text-2xl sm:text-3xl font-bold text-blue-800 mb-2">Dashboard General</h1>
+                  <p className="text-gray-600">Resumen de métricas actualizadas</p>
                 </div>
                 <div className="flex space-x-2 mt-2 sm:mt-0">
-                  <Button variant="outline" className="border-accent/30 text-accent hover:bg-accent hover:text-white">
+                  <Button className="bg-blue-600 text-white hover:bg-blue-700 border-none">
                     <Download className="h-4 w-4 mr-2" />
                     Exportar
                   </Button>
@@ -540,48 +540,48 @@ export default function HerramientasPage() {
 
               {/* Metrics Cards - Responsive Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
-                <Card className="bg-secondary/40 border-primary-medium/20 hover:bg-secondary/60 transition-all duration-300">
+                <Card className="bg-white border border-gray-200 shadow hover:border-blue-400 transition-all duration-300">
                   <CardHeader className="pb-2">
-                    <CardDescription className="text-primary-medium text-sm">INVERSIÓN TOTAL</CardDescription>
+                    <CardDescription className="text-blue-700 text-sm">INVERSIÓN TOTAL</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl sm:text-3xl font-bold text-primary-dark mb-1">S/ {totalInversion.toFixed(2)}</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-blue-900 mb-1">S/ {totalInversion.toFixed(2)}</div>
                     <div className="flex items-center text-green-700 text-sm">
                       <ArrowUp className="h-4 w-4 mr-1" />
                       12.5% vs ayer
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-secondary/40 border-primary-medium/20 hover:bg-secondary/60 transition-all duration-300">
+                <Card className="bg-white border border-gray-200 shadow hover:border-blue-400 transition-all duration-300">
                   <CardHeader className="pb-2">
-                    <CardDescription className="text-primary-medium text-sm">CONVERSIONES</CardDescription>
+                    <CardDescription className="text-blue-700 text-sm">CONVERSIONES</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl sm:text-3xl font-bold text-primary-dark mb-1">{totalConversiones}</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-blue-900 mb-1">{totalConversiones}</div>
                     <div className="flex items-center text-green-700 text-sm">
                       <ArrowUp className="h-4 w-4 mr-1" />
                       8.3% vs ayer
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-secondary/40 border-primary-medium/20 hover:bg-secondary/60 transition-all duration-300">
+                <Card className="bg-white border border-gray-200 shadow hover:border-blue-400 transition-all duration-300">
                   <CardHeader className="pb-2">
-                    <CardDescription className="text-primary-medium text-sm">CPA PROMEDIO</CardDescription>
+                    <CardDescription className="text-blue-700 text-sm">CPA PROMEDIO</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl sm:text-3xl font-bold text-primary-dark mb-1">S/ {avgCPA.toFixed(2)}</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-blue-900 mb-1">S/ {avgCPA.toFixed(2)}</div>
                     <div className="flex items-center text-red-700 text-sm">
                       <ArrowDown className="h-4 w-4 mr-1" />
                       3.8% vs ayer
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-secondary/40 border-primary-medium/20 hover:bg-secondary/60 transition-all duration-300">
+                <Card className="bg-white border border-gray-200 shadow hover:border-blue-400 transition-all duration-300">
                   <CardHeader className="pb-2">
-                    <CardDescription className="text-primary-medium text-sm">ROAS GENERAL</CardDescription>
+                    <CardDescription className="text-blue-700 text-sm">ROAS GENERAL</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl sm:text-3xl font-bold text-primary-dark mb-1">{avgROAS.toFixed(1)}x</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-blue-900 mb-1">{avgROAS.toFixed(1)}x</div>
                     <div className="flex items-center text-green-700 text-sm">
                       <ArrowUp className="h-4 w-4 mr-1" />
                       0.4x vs ayer
@@ -592,45 +592,45 @@ export default function HerramientasPage() {
 
               {/* Charts Section - Responsive */}
               <div className="flex flex-col gap-6 animate-fade-in w-full">
-                <Card className="bg-primary-light/20 border-primary-medium/20 w-full">
+                <Card className="bg-blue-50 border-blue-200 w-full">
                   <CardHeader>
-                    <CardTitle className="text-black">Inversión por Plataforma - Últimos 7 días</CardTitle>
+                    <CardTitle className="text-blue-900">Inversión por Plataforma - Últimos 7 días</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="h-64 flex items-end justify-around gap-2 pb-4 w-full">
                       <div className="flex flex-col items-center w-1/3">
-                        <div className="w-full h-20 bg-accent/30 rounded-t mb-2"></div>
-                        <span className="text-black/60 text-sm">Facebook</span>
+                        <div className="w-full h-20 bg-blue-400 rounded-t mb-2"></div>
+                        <span className="text-blue-700 text-sm">Facebook</span>
                       </div>
                       <div className="flex flex-col items-center w-1/3">
-                        <div className="w-full h-32 bg-accent/50 rounded-t mb-2"></div>
-                        <span className="text-black/60 text-sm">Google</span>
+                        <div className="w-full h-32 bg-blue-500 rounded-t mb-2"></div>
+                        <span className="text-blue-700 text-sm">Google</span>
                       </div>
                       <div className="flex flex-col items-center w-1/3">
-                        <div className="w-full h-16 bg-accent/40 rounded-t mb-2"></div>
-                        <span className="text-black/60 text-sm">TikTok</span>
+                        <div className="w-full h-16 bg-blue-300 rounded-t mb-2"></div>
+                        <span className="text-blue-700 text-sm">TikTok</span>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-primary-light/20 border-primary-medium/20 w-full">
+                <Card className="bg-blue-50 border-blue-200 w-full">
                   <CardHeader>
-                    <CardTitle className="text-black">Evolución del CPA - Últimos 7 días</CardTitle>
+                    <CardTitle className="text-blue-900">Evolución del CPA - Últimos 7 días</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="h-64 relative w-full">
                       <svg className="w-full h-full" viewBox="0 0 400 200">
                         <path
                           d="M 20 180 Q 100 120 200 100 T 380 80"
-                          stroke="#9290C3"
+                          stroke="#2563eb"
                           strokeWidth="3"
                           fill="none"
                           className="drop-shadow-lg"
                         />
                         <defs>
                           <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stopColor="#9290C3" stopOpacity="0.3" />
-                            <stop offset="100%" stopColor="#9290C3" stopOpacity="0.1" />
+                            <stop offset="0%" stopColor="#2563eb" stopOpacity="0.18" />
+                            <stop offset="100%" stopColor="#2563eb" stopOpacity="0.06" />
                           </linearGradient>
                         </defs>
                         <path d="M 20 180 Q 100 120 200 100 T 380 80 L 380 200 L 20 200 Z" fill="url(#gradient)" />
@@ -641,23 +641,23 @@ export default function HerramientasPage() {
               </div>
 
               {/* Recent Entries Table */}
-              <div className="bg-primary-light/20 border-primary-medium/20 rounded-xl p-6 mt-8 animate-fade-in">
+              <div className="bg-white border border-blue-200 rounded-xl p-6 mt-8 animate-fade-in">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-bold text-black">Entradas Recientes</h2>
-                  <button className="flex items-center text-accent hover:underline text-sm font-semibold">
+                  <h2 className="text-lg font-bold text-blue-900">Entradas Recientes</h2>
+                  <button className="flex items-center text-blue-700 hover:underline text-sm font-semibold">
                     <Eye className="h-4 w-4 mr-1" /> Ver todo
                   </button>
                 </div>
                 <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-primary-medium/20">
+                  <table className="min-w-full divide-y divide-blue-200">
                     <thead>
                       <tr>
-                        <th className="px-4 py-2 text-left text-xs font-bold text-black/60 uppercase tracking-wider">FECHA</th>
-                        <th className="px-4 py-2 text-left text-xs font-bold text-black/60 uppercase tracking-wider">PLATAFORMA</th>
-                        <th className="px-4 py-2 text-left text-xs font-bold text-black/60 uppercase tracking-wider">INVERSIÓN</th>
-                        <th className="px-4 py-2 text-left text-xs font-bold text-black/60 uppercase tracking-wider">CONVERSIONES</th>
-                        <th className="px-4 py-2 text-left text-xs font-bold text-black/60 uppercase tracking-wider">CPA</th>
-                        <th className="px-4 py-2 text-left text-xs font-bold text-black/60 uppercase tracking-wider">ROAS</th>
+                        <th className="px-4 py-2 text-left text-xs font-bold text-blue-900 uppercase tracking-wider">FECHA</th>
+                        <th className="px-4 py-2 text-left text-xs font-bold text-blue-900 uppercase tracking-wider">PLATAFORMA</th>
+                        <th className="px-4 py-2 text-left text-xs font-bold text-blue-900 uppercase tracking-wider">INVERSIÓN</th>
+                        <th className="px-4 py-2 text-left text-xs font-bold text-blue-900 uppercase tracking-wider">CONVERSIONES</th>
+                        <th className="px-4 py-2 text-left text-xs font-bold text-blue-900 uppercase tracking-wider">CPA</th>
+                        <th className="px-4 py-2 text-left text-xs font-bold text-blue-900 uppercase tracking-wider">ROAS</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -667,14 +667,14 @@ export default function HerramientasPage() {
                         return (
                           <tr
                             key={index}
-                            className="border-b border-primary-light/10 hover:bg-primary-medium/10 transition-colors"
+                            className="border-b border-blue-100 hover:bg-blue-50 transition-colors"
                           >
-                            <td className="text-black py-3">{row.fecha}</td>
-                            <td className="text-black py-3">{row.plataforma}</td>
-                            <td className="text-black py-3">S/ {row.inversion.toFixed(2)}</td>
-                            <td className="text-black py-3">{row.conversiones}</td>
-                            <td className="text-black py-3">S/ {cpa.toFixed(2)}</td>
-                            <td className="text-black py-3">{roas.toFixed(2)}x</td>
+                            <td className="text-blue-900 py-3">{row.fecha}</td>
+                            <td className="text-blue-900 py-3">{row.plataforma}</td>
+                            <td className="text-blue-900 py-3">S/ {row.inversion.toFixed(2)}</td>
+                            <td className="text-blue-900 py-3">{row.conversiones}</td>
+                            <td className="text-blue-900 py-3">S/ {cpa.toFixed(2)}</td>
+                            <td className="text-blue-900 py-3">{roas.toFixed(2)}x</td>
                           </tr>
                         )
                       })}
