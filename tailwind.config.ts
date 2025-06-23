@@ -32,9 +32,9 @@ const config = {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
-          light: "#9ACBD0",
-          medium: "#48A6A7",
-          dark: "#006A71",
+          dark: "#362706",
+          medium: "#464E2E",
+          light: "#ACB992",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -49,7 +49,7 @@ const config = {
           foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
-          DEFAULT: "#006A71",
+          DEFAULT: "#362706",
           foreground: "hsl(var(--accent-foreground))",
         },
         popover: {
@@ -60,7 +60,7 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        f2: '#F2EFE7',
+        e9: '#E9E5D6',
         black: '#191919',
       },
       borderRadius: {

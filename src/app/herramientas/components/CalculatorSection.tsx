@@ -26,8 +26,8 @@ export default function CalculatorSection({
   return (
     <div className="space-y-6">
       <div className="animate-fade-in">
-        <h1 className="text-2xl sm:text-3xl font-bold text-black mb-2">Calculadora de Rentabilidad</h1>
-        <p className="text-black/70">Analiza la rentabilidad de tus campañas COD</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-primary-dark mb-2">Calculadora de Rentabilidad</h1>
+        <p className="text-primary-medium">Analiza la rentabilidad de tus campañas COD</p>
       </div>
       <Card className="bg-primary-light/20 border-primary-medium/20 animate-fade-in">
         <CardHeader>
@@ -35,16 +35,16 @@ export default function CalculatorSection({
         </CardHeader>
         <CardContent>
           <Tabs value={activeCalcTab} onValueChange={handleTabChange} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 bg-primary-dark/50">
+            <TabsList className="grid w-full grid-cols-2 bg-primary-light/30">
               <TabsTrigger
                 value="conversiones"
-                className="data-[state=active]:bg-accent data-[state=active]:text-black"
+                className="data-[state=active]:bg-primary-dark data-[state=active]:text-white data-[state=inactive]:bg-transparent data-[state=inactive]:text-primary-dark"
               >
                 Conversiones
               </TabsTrigger>
               <TabsTrigger
                 value="whatsapp"
-                className="data-[state=active]:bg-accent data-[state=active]:text-black"
+                className="data-[state=active]:bg-primary-dark data-[state=active]:text-white data-[state=inactive]:bg-transparent data-[state=inactive]:text-primary-dark"
               >
                 WhatsApp
               </TabsTrigger>
@@ -55,7 +55,7 @@ export default function CalculatorSection({
                 {/* Inputs Conversiones */}
                 {/* ... (igual que en page.tsx) ... */}
                 <div>
-                  <Label htmlFor="inversion-pub" className="text-black/80">
+                  <Label htmlFor="inversion-pub" className="text-primary-dark">
                     Inversión Publicitaria (S/)
                   </Label>
                   <Input
@@ -67,7 +67,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="cpa-calc" className="text-black/80">
+                  <Label htmlFor="cpa-calc" className="text-primary-dark">
                     CPA (S/)
                   </Label>
                   <Input
@@ -79,7 +79,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="tasa-cierre" className="text-black/80">
+                  <Label htmlFor="tasa-cierre" className="text-primary-dark">
                     Tasa de Cierre (%)
                   </Label>
                   <Input
@@ -91,7 +91,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="precio-producto" className="text-black/80">
+                  <Label htmlFor="precio-producto" className="text-primary-dark">
                     Precio del Producto (S/)
                   </Label>
                   <Input
@@ -103,7 +103,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="costo-producto" className="text-black/80">
+                  <Label htmlFor="costo-producto" className="text-primary-dark">
                     Costo del Producto (S/)
                   </Label>
                   <Input
@@ -115,7 +115,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="gasto-operativo" className="text-black/80">
+                  <Label htmlFor="gasto-operativo" className="text-primary-dark">
                     Gasto Operativo/Pedido (S/)
                   </Label>
                   <Input
@@ -127,7 +127,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="tasa-entrega-calc" className="text-black/80">
+                  <Label htmlFor="tasa-entrega-calc" className="text-primary-dark">
                     Tasa de Entrega (%)
                   </Label>
                   <Input
@@ -144,7 +144,7 @@ export default function CalculatorSection({
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="comision-courier" className="text-black/80">
+                  <Label htmlFor="comision-courier" className="text-primary-dark">
                     Comisión Courier (S/)
                   </Label>
                   <Input
@@ -158,7 +158,7 @@ export default function CalculatorSection({
               </div>
               <Button
                 onClick={calculateResults}
-                className="bg-accent hover:bg-accent/90 text-black w-full sm:w-auto"
+                className="bg-primary-medium hover:bg-primary-dark text-white w-full sm:w-auto"
               >
                 Calcular Rentabilidad
               </Button>
@@ -176,7 +176,7 @@ export default function CalculatorSection({
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {/* Inputs WhatsApp */}
                 <div>
-                  <Label htmlFor="inversion-pub-wa" className="text-black/80">
+                  <Label htmlFor="inversion-pub-wa" className="text-primary-dark">
                     Inversión Publicitaria (S/)
                   </Label>
                   <Input
@@ -188,7 +188,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="costo-mensaje" className="text-black/80">
+                  <Label htmlFor="costo-mensaje" className="text-primary-dark">
                     Costo por Mensaje (CPM) (S/)
                   </Label>
                   <Input
@@ -200,7 +200,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="tasa-conversion-wa" className="text-black/80">
+                  <Label htmlFor="tasa-conversion-wa" className="text-primary-dark">
                     Tasa de Conversión WhatsApp (%)
                   </Label>
                   <Input
@@ -217,7 +217,7 @@ export default function CalculatorSection({
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="precio-producto-wa" className="text-black/80">
+                  <Label htmlFor="precio-producto-wa" className="text-primary-dark">
                     Precio del Producto (S/)
                   </Label>
                   <Input
@@ -229,7 +229,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="costo-producto-wa" className="text-black/80">
+                  <Label htmlFor="costo-producto-wa" className="text-primary-dark">
                     Costo del Producto (S/)
                   </Label>
                   <Input
@@ -241,7 +241,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="gasto-operativo-wa" className="text-black/80">
+                  <Label htmlFor="gasto-operativo-wa" className="text-primary-dark">
                     Gasto Operativo/Pedido (S/)
                   </Label>
                   <Input
@@ -253,7 +253,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="tasa-entrega-wa" className="text-black/80">
+                  <Label htmlFor="tasa-entrega-wa" className="text-primary-dark">
                     Tasa de Entrega (%)
                   </Label>
                   <Input
@@ -270,7 +270,7 @@ export default function CalculatorSection({
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="comision-courier-wa" className="text-black/80">
+                  <Label htmlFor="comision-courier-wa" className="text-primary-dark">
                     Comisión Courier (S/)
                   </Label>
                   <Input
@@ -284,7 +284,7 @@ export default function CalculatorSection({
               </div>
               <Button
                 onClick={calculateResults}
-                className="bg-accent hover:bg-accent/90 text-black w-full sm:w-auto"
+                className="bg-primary-medium hover:bg-primary-dark text-white w-full sm:w-auto"
               >
                 Calcular Rentabilidad
               </Button>
@@ -304,40 +304,40 @@ export default function CalculatorSection({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 animate-fade-in">
         <Card className="bg-primary-light/20 border-blue-500/30 hover:bg-primary-light/30 transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardDescription className="text-black/60 text-sm">CPA REAL</CardDescription>
+            <CardDescription className="text-primary-medium text-sm">CPA REAL</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl sm:text-3xl font-bold text-black">
+            <div className="text-2xl sm:text-3xl font-bold text-primary-dark">
               {calcResults.cpaReal !== null && !isNaN(calcResults.cpaReal) ? `S/ ${calcResults.cpaReal.toFixed(2)}` : "--"}
             </div>
           </CardContent>
         </Card>
         <Card className="bg-primary-light/20 border-green-500/30 hover:bg-primary-light/30 transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardDescription className="text-black/60 text-sm">ROAS</CardDescription>
+            <CardDescription className="text-primary-medium text-sm">ROAS</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl sm:text-3xl font-bold text-black">
+            <div className="text-2xl sm:text-3xl font-bold text-primary-dark">
               {calcResults.roas !== null && !isNaN(calcResults.roas) ? `${calcResults.roas.toFixed(2)}x` : "--"}
             </div>
           </CardContent>
         </Card>
         <Card className="bg-primary-light/20 border-yellow-500/30 hover:bg-primary-light/30 transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardDescription className="text-black/60 text-sm">ROI</CardDescription>
+            <CardDescription className="text-primary-medium text-sm">ROI</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl sm:text-3xl font-bold text-black">
+            <div className="text-2xl sm:text-3xl font-bold text-primary-dark">
               {calcResults.roi !== null && !isNaN(calcResults.roi) ? `${calcResults.roi.toFixed(1)}%` : "--"}
             </div>
           </CardContent>
         </Card>
         <Card className="bg-primary-light/20 border-purple-500/30 hover:bg-primary-light/30 transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardDescription className="text-black/60 text-sm">MARGEN NETO</CardDescription>
+            <CardDescription className="text-primary-medium text-sm">MARGEN NETO</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl sm:text-3xl font-bold text-black">
+            <div className="text-2xl sm:text-3xl font-bold text-primary-dark">
               {calcResults.margenNeto !== null && !isNaN(calcResults.margenNeto) ? `S/ ${calcResults.margenNeto.toFixed(2)}` : "--"}
             </div>
           </CardContent>

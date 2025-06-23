@@ -17,12 +17,12 @@ export default function HomePage() {
             <div className="flex items-center group">
               <div className="flex-shrink-0">
                 <div className="h-8 w-8 bg-gradient-to-r from-accent to-primary-light rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                  <ShoppingCart className="h-5 w-5 text-white" />
+                  <ShoppingCart className="h-5 w-5 text-primary-light" />
                 </div>
               </div>
               <div className="ml-3">
                 <Link href="/">
-                <span className="text-xl font-bold text-white transition-colors duration-300 group-hover:text-accent">
+                <span className="text-xl font-bold text-primary-light transition-colors duration-300 group-hover:text-accent">
                   HOLISTIC
                 </span>
                 </Link>
@@ -124,17 +124,43 @@ export default function HomePage() {
 
       {/* Hero Section - Meta Style */}
       <section className="relative overflow-hidden bg-f2 min-h-[90vh] flex items-center justify-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32 animate-fade-in-down">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32 animate-fade-in-left-to-right">
           <div className="text-center">
             <Badge className="bg-primary-light/20 text-accent border-accent/20 mb-6 sm:mb-8 transition-all duration-300 hover:scale-105 hover:bg-primary-light/30">
               🚀 Plataforma Todo-en-Uno
             </Badge>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-primary-dark mb-6 transition-all duration-700 hover:scale-105 leading-tight">
-              Creamos el futuro del
-              <br />
-              <span className="bg-gradient-to-r from-primary-medium to-primary-light bg-clip-text text-transparent">
-                comercio digital
-              </span>
+              {(() => {
+                const first = "Creamos el futuro del ";
+                const second = "comercio digital";
+                return (
+                  <>
+                    {first.split("").map((char, i) => (
+                      <span
+                        key={"first-" + i}
+                        className="inline-block animate-fade-in-opacity"
+                        style={{ animationDelay: `${i * 0.04}s`, minWidth: "0.05em" }}
+                      >
+                        {char === " " ? "\u00A0" : char}
+                      </span>
+                    ))}
+                    <span className="whitespace-nowrap mb-4 inline-block bg-gradient-to-r from-primary-medium to-primary-light bg-clip-text">
+                      {second.split("").map((char, i) => (
+                        <span
+                          key={"second-" + i}
+                          className="inline-block animate-fade-in-opacity"
+                          style={{
+                            animationDelay: `${(i + first.length) * 0.04}s`,
+                            minWidth: "0.05em"
+                          }}
+                        >
+                          {char === " " ? "\u00A0" : char}
+                        </span>
+                      ))}
+                    </span>
+                  </>
+                );
+              })()}
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-primary-medium mb-8 max-w-4xl mx-auto leading-relaxed transition-opacity duration-500 px-4">
               Conectamos marcas con clientes a través de tecnología inteligente, automatización avanzada y experiencias
@@ -258,7 +284,7 @@ export default function HomePage() {
                   gráficos interactivos y análisis predictivo.
                 </CardDescription>
                 <Link href="/herramientas">
-                  <Button className="bg-accent hover:bg-accent/90 text-primary-dark font-semibold rounded-full">
+                  <Button className="bg-primary-medium hover:bg-primary-dark text-white font-semibold rounded-full">
                     Explorar Dashboard
                   </Button>
                 </Link>
@@ -281,7 +307,7 @@ export default function HomePage() {
                 <Link href="/herramientas">
                   <Button
                     variant="outline"
-                    className="border-accent/30 text-accent hover:bg-accent hover:text-primary-dark rounded-full"
+                    className="border-accent/30 text-white bg-primary-medium hover:bg-primary-dark hover:text-white rounded-full"
                   >
                     Usar Calculadora
                   </Button>
@@ -306,7 +332,7 @@ export default function HomePage() {
                 ecosistema del ecommerce.
               </p>
               <Link href="#nosotros">
-                <Button className="bg-accent hover:bg-accent/90 text-black font-semibold rounded-full px-8 py-3">
+                <Button className="bg-primary-medium hover:bg-primary-dark text-white font-semibold rounded-full">
                   Más información
                 </Button>
               </Link>
@@ -385,7 +411,7 @@ export default function HomePage() {
                 y la inteligencia artificial para crear la próxima evolución del comercio digital.
               </p>
               <Link href="#equipo">
-                <Button className="bg-accent hover:bg-accent/90 text-black font-semibold rounded-full px-8 py-3">
+                <Button className="bg-primary-medium hover:bg-primary-dark text-white font-semibold rounded-full">
                   Conoce a nuestro equipo
                 </Button>
               </Link>
@@ -407,7 +433,7 @@ export default function HomePage() {
           <Link href="/herramientas">
             <Button
               size="lg"
-              className="bg-accent hover:bg-accent/90 text-black font-semibold text-base sm:text-lg px-8 sm:px-12 py-4 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/25 rounded-full"
+              className="bg-accent hover:bg-accent/90 text-white font-semibold text-base sm:text-lg px-8 sm:px-12 py-4 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/25 rounded-full"
             >
               Comenzar Ahora
               <ArrowRight className="ml-2 h-5 w-5" />
@@ -423,9 +449,9 @@ export default function HomePage() {
             <div className="col-span-1 sm:col-span-2 md:col-span-2">
               <div className="flex items-center mb-4 group">
                 <div className="h-8 w-8 bg-gradient-to-r from-accent to-primary-light rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                  <ShoppingCart className="h-5 w-5 text-black" />
+                  <ShoppingCart className="h-5 w-5 text-primary-light" />
                 </div>
-                <span className="ml-3 text-xl font-bold text-white group-hover:text-accent transition-colors duration-300">
+                <span className="ml-3 text-xl font-bold text-primary-light group-hover:text-accent transition-colors duration-300">
                   Holistic
                 </span>
               </div>
@@ -433,9 +459,9 @@ export default function HomePage() {
                 La plataforma integral para ecommerce y social media que impulsa tu negocio digital.
               </p>
               <div className="text-white/60 space-y-1 text-sm sm:text-base">
-                <p>📧 hola@holistic.com</p>
-                <p>📞 +1 (555) 123-4567</p>
-                <p>📍 Madrid, España</p>
+                <p>📧 victor.minas@unmsm.edu.pe</p>
+                <p>📞 51 982 295 611</p>
+                <p>📍 Gaviotas 122 - Surquillo</p>
               </div>
             </div>
             <div>

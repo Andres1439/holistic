@@ -412,9 +412,9 @@ export default function HerramientasPage() {
             <div className="flex items-center space-x-4">
               <Link href="/" className="flex items-center group">
                 <div className="h-8 w-8 bg-gradient-to-r from-accent to-primary-medium rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                  <ShoppingCart className="h-5 w-5 text-white" />
+                  <ShoppingCart className="h-5 w-5 text-primary-light" />
                 </div>
-                <span className="ml-3 text-xl font-bold text-black group-hover:text-accent transition-colors duration-300">
+                <span className="ml-3 text-xl font-bold text-primary-light group-hover:text-accent transition-colors duration-300">
                   HOLISTIC
                 </span>
               </Link>
@@ -442,8 +442,8 @@ export default function HerramientasPage() {
               onClick={() => setActiveTab("dashboard")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "dashboard"
-                  ? "bg-accent text-white font-semibold"
-                  : "text-black hover:bg-primary-medium/30 hover:text-accent"
+                  ? "bg-accent text-e9 font-semibold border border-e9"
+                  : "text-e9/70 hover:bg-primary-medium/30 hover:text-e9"
               }`}
             >
               <Home className="h-5 w-5" />
@@ -453,8 +453,8 @@ export default function HerramientasPage() {
               onClick={() => setActiveTab("campanas")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "campanas"
-                  ? "bg-accent text-white font-semibold"
-                  : "text-black/70 hover:bg-primary-medium/30 hover:text-accent"
+                  ? "bg-accent text-e9 font-semibold border border-e9"
+                  : "text-e9/70 hover:bg-primary-medium/30 hover:text-e9"
               }`}
             >
               <Target className="h-5 w-5" />
@@ -464,8 +464,8 @@ export default function HerramientasPage() {
               onClick={() => setActiveTab("entregas")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "entregas"
-                  ? "bg-accent text-white font-semibold"
-                  : "text-black/70 hover:bg-primary-medium/30 hover:text-accent"
+                  ? "bg-accent text-e9 font-semibold border border-e9"
+                  : "text-e9/70 hover:bg-primary-medium/30 hover:text-e9"
               }`}
             >
               <Truck className="h-5 w-5" />
@@ -475,8 +475,8 @@ export default function HerramientasPage() {
               onClick={() => setActiveTab("calculadora")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "calculadora"
-                  ? "bg-accent text-white font-semibold"
-                  : "text-black/70 hover:bg-primary-medium/30 hover:text-accent"
+                  ? "bg-accent text-e9 font-semibold border border-e9"
+                  : "text-e9/70 hover:bg-primary-medium/30 hover:text-e9"
               }`}
             >
               <Calculator className="h-5 w-5" />
@@ -486,8 +486,8 @@ export default function HerramientasPage() {
               onClick={() => setActiveTab("historial")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "historial"
-                  ? "bg-accent text-white font-semibold"
-                  : "text-black/70 hover:bg-primary-medium/30 hover:text-accent"
+                  ? "bg-accent text-e9 font-semibold border border-e9"
+                  : "text-e9/70 hover:bg-primary-medium/30 hover:text-e9"
               }`}
             >
               <History className="h-5 w-5" />
@@ -527,8 +527,8 @@ export default function HerramientasPage() {
             <div className="space-y-6 animate-fade-in">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h1 className="text-2xl sm:text-3xl font-bold text-black mb-2">Dashboard General</h1>
-                  <p className="text-primary-dark">Resumen de métricas actualizadas</p>
+                  <h1 className="text-2xl sm:text-3xl font-bold text-primary-dark mb-2">Dashboard General</h1>
+                  <p className="text-primary-medium">Resumen de métricas actualizadas</p>
                 </div>
                 <div className="flex space-x-2 mt-2 sm:mt-0">
                   <Button variant="outline" className="border-accent/30 text-accent hover:bg-accent hover:text-white">
@@ -540,49 +540,49 @@ export default function HerramientasPage() {
 
               {/* Metrics Cards - Responsive Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
-                <Card className="bg-primary-light/20 border-primary-medium/20 hover:bg-primary-light/30 transition-all duration-300">
+                <Card className="bg-secondary/40 border-primary-medium/20 hover:bg-secondary/60 transition-all duration-300">
                   <CardHeader className="pb-2">
-                    <CardDescription className="text-black/60 text-sm">INVERSIÓN TOTAL</CardDescription>
+                    <CardDescription className="text-primary-medium text-sm">INVERSIÓN TOTAL</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl sm:text-3xl font-bold text-black mb-1">S/ {totalInversion.toFixed(2)}</div>
-                    <div className="flex items-center text-green-400 text-sm">
+                    <div className="text-2xl sm:text-3xl font-bold text-primary-dark mb-1">S/ {totalInversion.toFixed(2)}</div>
+                    <div className="flex items-center text-green-700 text-sm">
                       <ArrowUp className="h-4 w-4 mr-1" />
                       12.5% vs ayer
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-primary-light/20 border-primary-medium/20 hover:bg-primary-light/30 transition-all duration-300">
+                <Card className="bg-secondary/40 border-primary-medium/20 hover:bg-secondary/60 transition-all duration-300">
                   <CardHeader className="pb-2">
-                    <CardDescription className="text-black/60 text-sm">CONVERSIONES</CardDescription>
+                    <CardDescription className="text-primary-medium text-sm">CONVERSIONES</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl sm:text-3xl font-bold text-black mb-1">{totalConversiones}</div>
-                    <div className="flex items-center text-green-400 text-sm">
+                    <div className="text-2xl sm:text-3xl font-bold text-primary-dark mb-1">{totalConversiones}</div>
+                    <div className="flex items-center text-green-700 text-sm">
                       <ArrowUp className="h-4 w-4 mr-1" />
                       8.3% vs ayer
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-primary-light/20 border-primary-medium/20 hover:bg-primary-light/30 transition-all duration-300">
+                <Card className="bg-secondary/40 border-primary-medium/20 hover:bg-secondary/60 transition-all duration-300">
                   <CardHeader className="pb-2">
-                    <CardDescription className="text-black/60 text-sm">CPA PROMEDIO</CardDescription>
+                    <CardDescription className="text-primary-medium text-sm">CPA PROMEDIO</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl sm:text-3xl font-bold text-black mb-1">S/ {avgCPA.toFixed(2)}</div>
-                    <div className="flex items-center text-red-400 text-sm">
+                    <div className="text-2xl sm:text-3xl font-bold text-primary-dark mb-1">S/ {avgCPA.toFixed(2)}</div>
+                    <div className="flex items-center text-red-700 text-sm">
                       <ArrowDown className="h-4 w-4 mr-1" />
                       3.8% vs ayer
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-primary-light/20 border-primary-medium/20 hover:bg-primary-light/30 transition-all duration-300">
+                <Card className="bg-secondary/40 border-primary-medium/20 hover:bg-secondary/60 transition-all duration-300">
                   <CardHeader className="pb-2">
-                    <CardDescription className="text-black/60 text-sm">ROAS GENERAL</CardDescription>
+                    <CardDescription className="text-primary-medium text-sm">ROAS GENERAL</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl sm:text-3xl font-bold text-black mb-1">{avgROAS.toFixed(1)}x</div>
-                    <div className="flex items-center text-green-400 text-sm">
+                    <div className="text-2xl sm:text-3xl font-bold text-primary-dark mb-1">{avgROAS.toFixed(1)}x</div>
+                    <div className="flex items-center text-green-700 text-sm">
                       <ArrowUp className="h-4 w-4 mr-1" />
                       0.4x vs ayer
                     </div>
