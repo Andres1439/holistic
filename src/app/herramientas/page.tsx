@@ -404,28 +404,28 @@ export default function HerramientasPage() {
   const avgNoUbicados = totalDeliveries > 0 ? (totalNoUbicados / totalDeliveries) * 100 : 4.7
 
   return (
-    <div className="min-h-screen bg-black pb-14 w-full overflow-x-hidden">
+    <div className="min-h-screen bg-f2 pb-14 w-full overflow-x-hidden">
       {/* Header */}
-      <header className="border-b border-primary-medium/20 bg-black/80 backdrop-blur-sm w-full">
+      <header className="border-b border-primary-medium/20 bg-primary-dark/80 backdrop-blur-sm w-full">
         <div className="px-2 sm:px-6 lg:px-8 py-4 w-full">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Link href="/" className="flex items-center group">
-                <div className="h-8 w-8 bg-gradient-to-r from-accent to-primary-light rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                  <ShoppingCart className="h-5 w-5 text-black" />
+                <div className="h-8 w-8 bg-gradient-to-r from-accent to-primary-medium rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                  <ShoppingCart className="h-5 w-5 text-white" />
                 </div>
-                <span className="ml-3 text-xl font-bold text-white group-hover:text-accent transition-colors duration-300">
+                <span className="ml-3 text-xl font-bold text-black group-hover:text-accent transition-colors duration-300">
                   HOLISTIC
                 </span>
               </Link>
               <div className="hidden sm:block">
-                <Badge variant="outline" className="border-accent/30 text-accent">
+                <Badge variant="outline" className="border-accent/30 text-primary-dark bg-primary-light/60">
                   Herramientas
                 </Badge>
               </div>
             </div>
             <Link href="/">
-              <Button variant="outline" className="border-accent/30 text-accent hover:bg-accent hover:text-black">
+              <Button variant="outline" className="border-accent/30 text-accent hover:bg-accent hover:text-white">
                 <Home className="h-4 w-4 mr-2" />
                 Volver al Inicio
               </Button>
@@ -436,14 +436,14 @@ export default function HerramientasPage() {
 
       <div className="flex min-h-screen">
         {/* Sidebar */}
-        <div className="w-64 bg-primary-dark/50 border-r border-primary-medium/20 p-4 hidden lg:block">
+        <div className="w-64 bg-primary-dark/90 border-r border-primary-medium/20 p-4 hidden lg:block">
           <nav className="space-y-2">
             <button
               onClick={() => setActiveTab("dashboard")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "dashboard"
-                  ? "bg-accent text-black font-semibold"
-                  : "text-white hover:bg-primary-medium/30 hover:text-accent"
+                  ? "bg-accent text-white font-semibold"
+                  : "text-black hover:bg-primary-medium/30 hover:text-accent"
               }`}
             >
               <Home className="h-5 w-5" />
@@ -453,8 +453,8 @@ export default function HerramientasPage() {
               onClick={() => setActiveTab("campanas")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "campanas"
-                  ? "bg-accent text-black font-semibold"
-                  : "text-white/70 hover:bg-primary-medium/30 hover:text-accent"
+                  ? "bg-accent text-white font-semibold"
+                  : "text-black/70 hover:bg-primary-medium/30 hover:text-accent"
               }`}
             >
               <Target className="h-5 w-5" />
@@ -464,8 +464,8 @@ export default function HerramientasPage() {
               onClick={() => setActiveTab("entregas")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "entregas"
-                  ? "bg-accent text-black font-semibold"
-                  : "text-white/70 hover:bg-primary-medium/30 hover:text-accent"
+                  ? "bg-accent text-white font-semibold"
+                  : "text-black/70 hover:bg-primary-medium/30 hover:text-accent"
               }`}
             >
               <Truck className="h-5 w-5" />
@@ -475,8 +475,8 @@ export default function HerramientasPage() {
               onClick={() => setActiveTab("calculadora")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "calculadora"
-                  ? "bg-accent text-black font-semibold"
-                  : "text-white/70 hover:bg-primary-medium/30 hover:text-accent"
+                  ? "bg-accent text-white font-semibold"
+                  : "text-black/70 hover:bg-primary-medium/30 hover:text-accent"
               }`}
             >
               <Calculator className="h-5 w-5" />
@@ -486,8 +486,8 @@ export default function HerramientasPage() {
               onClick={() => setActiveTab("historial")}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
                 activeTab === "historial"
-                  ? "bg-accent text-black font-semibold"
-                  : "text-white/70 hover:bg-primary-medium/30 hover:text-accent"
+                  ? "bg-accent text-white font-semibold"
+                  : "text-black/70 hover:bg-primary-medium/30 hover:text-accent"
               }`}
             >
               <History className="h-5 w-5" />
@@ -527,11 +527,11 @@ export default function HerramientasPage() {
             <div className="space-y-6 animate-fade-in">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Dashboard General</h1>
-                  <p className="text-white/70">Resumen de métricas actualizadas</p>
+                  <h1 className="text-2xl sm:text-3xl font-bold text-black mb-2">Dashboard General</h1>
+                  <p className="text-primary-dark">Resumen de métricas actualizadas</p>
                 </div>
                 <div className="flex space-x-2 mt-2 sm:mt-0">
-                  <Button variant="outline" className="border-accent/30 text-accent hover:bg-accent hover:text-black">
+                  <Button variant="outline" className="border-accent/30 text-accent hover:bg-accent hover:text-white">
                     <Download className="h-4 w-4 mr-2" />
                     Exportar
                   </Button>
@@ -540,48 +540,48 @@ export default function HerramientasPage() {
 
               {/* Metrics Cards - Responsive Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
-                <Card className="bg-primary-medium/20 border-primary-light/20 hover:bg-primary-medium/30 transition-all duration-300">
+                <Card className="bg-primary-light/20 border-primary-medium/20 hover:bg-primary-light/30 transition-all duration-300">
                   <CardHeader className="pb-2">
-                    <CardDescription className="text-white/60 text-sm">INVERSIÓN TOTAL</CardDescription>
+                    <CardDescription className="text-black/60 text-sm">INVERSIÓN TOTAL</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl sm:text-3xl font-bold text-white mb-1">S/ {totalInversion.toFixed(2)}</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-black mb-1">S/ {totalInversion.toFixed(2)}</div>
                     <div className="flex items-center text-green-400 text-sm">
                       <ArrowUp className="h-4 w-4 mr-1" />
                       12.5% vs ayer
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-primary-medium/20 border-primary-light/20 hover:bg-primary-medium/30 transition-all duration-300">
+                <Card className="bg-primary-light/20 border-primary-medium/20 hover:bg-primary-light/30 transition-all duration-300">
                   <CardHeader className="pb-2">
-                    <CardDescription className="text-white/60 text-sm">CONVERSIONES</CardDescription>
+                    <CardDescription className="text-black/60 text-sm">CONVERSIONES</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl sm:text-3xl font-bold text-white mb-1">{totalConversiones}</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-black mb-1">{totalConversiones}</div>
                     <div className="flex items-center text-green-400 text-sm">
                       <ArrowUp className="h-4 w-4 mr-1" />
                       8.3% vs ayer
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-primary-medium/20 border-primary-light/20 hover:bg-primary-medium/30 transition-all duration-300">
+                <Card className="bg-primary-light/20 border-primary-medium/20 hover:bg-primary-light/30 transition-all duration-300">
                   <CardHeader className="pb-2">
-                    <CardDescription className="text-white/60 text-sm">CPA PROMEDIO</CardDescription>
+                    <CardDescription className="text-black/60 text-sm">CPA PROMEDIO</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl sm:text-3xl font-bold text-white mb-1">S/ {avgCPA.toFixed(2)}</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-black mb-1">S/ {avgCPA.toFixed(2)}</div>
                     <div className="flex items-center text-red-400 text-sm">
                       <ArrowDown className="h-4 w-4 mr-1" />
                       3.8% vs ayer
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-primary-medium/20 border-primary-light/20 hover:bg-primary-medium/30 transition-all duration-300">
+                <Card className="bg-primary-light/20 border-primary-medium/20 hover:bg-primary-light/30 transition-all duration-300">
                   <CardHeader className="pb-2">
-                    <CardDescription className="text-white/60 text-sm">ROAS GENERAL</CardDescription>
+                    <CardDescription className="text-black/60 text-sm">ROAS GENERAL</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl sm:text-3xl font-bold text-white mb-1">{avgROAS.toFixed(1)}x</div>
+                    <div className="text-2xl sm:text-3xl font-bold text-black mb-1">{avgROAS.toFixed(1)}x</div>
                     <div className="flex items-center text-green-400 text-sm">
                       <ArrowUp className="h-4 w-4 mr-1" />
                       0.4x vs ayer
@@ -592,30 +592,30 @@ export default function HerramientasPage() {
 
               {/* Charts Section - Responsive */}
               <div className="flex flex-col gap-6 animate-fade-in w-full">
-                <Card className="bg-primary-medium/20 border-primary-light/20 w-full">
+                <Card className="bg-primary-light/20 border-primary-medium/20 w-full">
                   <CardHeader>
-                    <CardTitle className="text-white">Inversión por Plataforma - Últimos 7 días</CardTitle>
+                    <CardTitle className="text-black">Inversión por Plataforma - Últimos 7 días</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="h-64 flex items-end justify-around gap-2 pb-4 w-full">
                       <div className="flex flex-col items-center w-1/3">
                         <div className="w-full h-20 bg-accent/30 rounded-t mb-2"></div>
-                        <span className="text-white/60 text-sm">Facebook</span>
+                        <span className="text-black/60 text-sm">Facebook</span>
                       </div>
                       <div className="flex flex-col items-center w-1/3">
                         <div className="w-full h-32 bg-accent/50 rounded-t mb-2"></div>
-                        <span className="text-white/60 text-sm">Google</span>
+                        <span className="text-black/60 text-sm">Google</span>
                       </div>
                       <div className="flex flex-col items-center w-1/3">
                         <div className="w-full h-16 bg-accent/40 rounded-t mb-2"></div>
-                        <span className="text-white/60 text-sm">TikTok</span>
+                        <span className="text-black/60 text-sm">TikTok</span>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-                <Card className="bg-primary-medium/20 border-primary-light/20 w-full">
+                <Card className="bg-primary-light/20 border-primary-medium/20 w-full">
                   <CardHeader>
-                    <CardTitle className="text-white">Evolución del CPA - Últimos 7 días</CardTitle>
+                    <CardTitle className="text-black">Evolución del CPA - Últimos 7 días</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="h-64 relative w-full">
@@ -641,52 +641,47 @@ export default function HerramientasPage() {
               </div>
 
               {/* Recent Entries Table */}
-              <Card className="bg-primary-medium/20 border-primary-light/20 animate-fade-in w-full">
-                <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-white">Entradas Recientes</CardTitle>
-                  <Button variant="ghost" className="text-accent hover:text-accent/80">
-                    <Eye className="h-4 w-4 mr-2" />
-                    Ver todo
-                  </Button>
-                </CardHeader>
-                <CardContent>
-                  <div className="relative overflow-x-auto">
-                    <div className="w-full min-w-[750px]">
-                      <table className="w-full">
-                        <thead>
-                          <tr className="border-b border-primary-light/20">
-                            <th className="text-left text-white/60 text-sm font-medium py-3">FECHA</th>
-                            <th className="text-left text-white/60 text-sm font-medium py-3">PLATAFORMA</th>
-                            <th className="text-left text-white/60 text-sm font-medium py-3">INVERSIÓN</th>
-                            <th className="text-left text-white/60 text-sm font-medium py-3">CONVERSIONES</th>
-                            <th className="text-left text-white/60 text-sm font-medium py-3">CPA</th>
-                            <th className="text-left text-white/60 text-sm font-medium py-3">ROAS</th>
+              <div className="bg-primary-light/20 border-primary-medium/20 rounded-xl p-6 mt-8 animate-fade-in">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-bold text-black">Entradas Recientes</h2>
+                  <button className="flex items-center text-accent hover:underline text-sm font-semibold">
+                    <Eye className="h-4 w-4 mr-1" /> Ver todo
+                  </button>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-primary-medium/20">
+                    <thead>
+                      <tr>
+                        <th className="px-4 py-2 text-left text-xs font-bold text-black/60 uppercase tracking-wider">FECHA</th>
+                        <th className="px-4 py-2 text-left text-xs font-bold text-black/60 uppercase tracking-wider">PLATAFORMA</th>
+                        <th className="px-4 py-2 text-left text-xs font-bold text-black/60 uppercase tracking-wider">INVERSIÓN</th>
+                        <th className="px-4 py-2 text-left text-xs font-bold text-black/60 uppercase tracking-wider">CONVERSIONES</th>
+                        <th className="px-4 py-2 text-left text-xs font-bold text-black/60 uppercase tracking-wider">CPA</th>
+                        <th className="px-4 py-2 text-left text-xs font-bold text-black/60 uppercase tracking-wider">ROAS</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {dashboardData.map((row, index) => {
+                        const cpa = row.inversion / row.conversiones
+                        const roas = row.ventas / row.inversion
+                        return (
+                          <tr
+                            key={index}
+                            className="border-b border-primary-light/10 hover:bg-primary-medium/10 transition-colors"
+                          >
+                            <td className="text-black py-3">{row.fecha}</td>
+                            <td className="text-black py-3">{row.plataforma}</td>
+                            <td className="text-black py-3">S/ {row.inversion.toFixed(2)}</td>
+                            <td className="text-black py-3">{row.conversiones}</td>
+                            <td className="text-black py-3">S/ {cpa.toFixed(2)}</td>
+                            <td className="text-black py-3">{roas.toFixed(2)}x</td>
                           </tr>
-                        </thead>
-                        <tbody>
-                          {dashboardData.map((row, index) => {
-                            const cpa = row.inversion / row.conversiones
-                            const roas = row.ventas / row.inversion
-                            return (
-                              <tr
-                                key={index}
-                                className="border-b border-primary-light/10 hover:bg-primary-medium/10 transition-colors"
-                              >
-                                <td className="text-white py-3">{row.fecha}</td>
-                                <td className="text-white py-3">{row.plataforma}</td>
-                                <td className="text-white py-3">S/ {row.inversion.toFixed(2)}</td>
-                                <td className="text-white py-3">{row.conversiones}</td>
-                                <td className="text-white py-3">S/ {cpa.toFixed(2)}</td>
-                                <td className="text-white py-3">{roas.toFixed(2)}x</td>
-                              </tr>
-                            )
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           )}
 

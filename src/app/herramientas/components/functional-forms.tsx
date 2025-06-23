@@ -77,15 +77,15 @@ export function CampaignForm({ onAddCampaign }: { onAddCampaign: (data: Campaign
   }
 
   return (
-    <Card className="bg-primary-medium/20 border-primary-light/20 animate-fade-in">
+    <Card className="bg-primary-light/20 border-primary-medium/20 animate-fade-in">
       <CardHeader>
-        <CardTitle className="text-white">Registrar Datos de Campaña</CardTitle>
+        <CardTitle className="text-black">Registrar Datos de Campaña</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             <div>
-              <Label htmlFor="fecha" className="text-white/80">
+              <Label htmlFor="fecha" className="text-black/80">
                 Fecha
               </Label>
               <Input
@@ -93,22 +93,22 @@ export function CampaignForm({ onAddCampaign }: { onAddCampaign: (data: Campaign
                 type="date"
                 value={formData.fecha}
                 onChange={(e) => setFormData({ ...formData, fecha: e.target.value })}
-                className="bg-primary-dark/50 border-primary-light/30 text-white"
+                className="bg-primary-dark/10 border-primary-medium/30 text-primary-dark"
                 required
               />
             </div>
             <div>
-              <Label htmlFor="plataforma" className="text-white/80">
+              <Label htmlFor="plataforma" className="text-black/80">
                 Plataforma
               </Label>
               <Select
                 value={formData.plataforma}
                 onValueChange={(value) => setFormData({ ...formData, plataforma: value })}
               >
-                <SelectTrigger className="bg-primary-dark/50 border-primary-light/30 text-white">
+                <SelectTrigger className="bg-primary-dark/10 border-primary-medium/30 text-primary-dark">
                   <SelectValue placeholder="Seleccionar..." />
                 </SelectTrigger>
-                <SelectContent className="bg-primary-dark border-primary-light/30">
+                <SelectContent className="bg-primary-dark/10 border-primary-medium/30">
                   <SelectItem value="Facebook">Facebook</SelectItem>
                   <SelectItem value="Google">Google</SelectItem>
                   <SelectItem value="TikTok">TikTok</SelectItem>
@@ -116,14 +116,14 @@ export function CampaignForm({ onAddCampaign }: { onAddCampaign: (data: Campaign
               </Select>
             </div>
             <div>
-              <Label htmlFor="tipo" className="text-white/80">
+              <Label htmlFor="tipo" className="text-black/80">
                 Tipo de Campaña
               </Label>
               <Select value={formData.tipo} onValueChange={(value) => setFormData({ ...formData, tipo: value })}>
-                <SelectTrigger className="bg-primary-dark/50 border-primary-light/30 text-white">
+                <SelectTrigger className="bg-primary-dark/10 border-primary-medium/30 text-primary-dark">
                   <SelectValue placeholder="Seleccionar..." />
                 </SelectTrigger>
-                <SelectContent className="bg-primary-dark border-primary-light/30">
+                <SelectContent className="bg-primary-dark/10 border-primary-medium/30">
                   <SelectItem value="Conversion">Conversión</SelectItem>
                   <SelectItem value="WhatsApp">WhatsApp</SelectItem>
                   <SelectItem value="Trafico">Tráfico</SelectItem>
@@ -131,7 +131,7 @@ export function CampaignForm({ onAddCampaign }: { onAddCampaign: (data: Campaign
               </Select>
             </div>
             <div>
-              <Label htmlFor="inversion" className="text-white/80">
+              <Label htmlFor="inversion" className="text-black/80">
                 Inversión (S/)
               </Label>
               <Input
@@ -140,12 +140,12 @@ export function CampaignForm({ onAddCampaign }: { onAddCampaign: (data: Campaign
                 step="0.01"
                 value={formData.inversion}
                 onChange={(e) => setFormData({ ...formData, inversion: e.target.value })}
-                className="bg-primary-dark/50 border-primary-light/30 text-white"
+                className="bg-primary-dark/10 border-primary-medium/30 text-primary-dark"
                 required
               />
             </div>
             <div>
-              <Label htmlFor="conversiones" className="text-white/80">
+              <Label htmlFor="conversiones" className="text-black/80">
                 Conversiones
               </Label>
               <Input
@@ -153,13 +153,13 @@ export function CampaignForm({ onAddCampaign }: { onAddCampaign: (data: Campaign
                 type="number"
                 value={formData.conversiones}
                 onChange={(e) => setFormData({ ...formData, conversiones: e.target.value })}
-                className="bg-primary-dark/50 border-primary-light/30 text-white"
+                className="bg-primary-dark/10 border-primary-medium/30 text-primary-dark"
                 required
               />
             </div>
           </div>
           <div>
-            <Label htmlFor="ventas" className="text-white/80">
+            <Label htmlFor="ventas" className="text-black/80">
               Ventas Generadas (S/)
             </Label>
             <Input
@@ -168,11 +168,11 @@ export function CampaignForm({ onAddCampaign }: { onAddCampaign: (data: Campaign
               step="0.01"
               value={formData.ventas}
               onChange={(e) => setFormData({ ...formData, ventas: e.target.value })}
-              className="bg-primary-dark/50 border-primary-light/30 text-white"
+              className="bg-primary-dark/10 border-primary-medium/30 text-primary-dark"
             />
           </div>
           <div className="flex space-x-4">
-            <Button type="submit" className="bg-accent hover:bg-accent/90 text-black">
+            <Button type="submit" className="bg-accent hover:bg-accent/90 text-white">
               <Plus className="h-4 w-4 mr-2" />
               Guardar Datos
             </Button>
@@ -180,7 +180,7 @@ export function CampaignForm({ onAddCampaign }: { onAddCampaign: (data: Campaign
               type="button"
               onClick={handleClear}
               variant="outline"
-              className="border-accent/30 text-accent hover:bg-accent hover:text-black"
+              className="border-accent/30 text-accent hover:bg-accent hover:text-primary-dark"
             >
               Limpiar
             </Button>
@@ -226,15 +226,15 @@ export function DeliveryForm({ onAddDelivery }: { onAddDelivery: (data: Delivery
   }
 
   return (
-    <Card className="bg-primary-medium/20 border-primary-light/20 animate-fade-in">
+    <Card className="bg-primary-light/20 border-primary-medium/20 animate-fade-in">
       <CardHeader>
-        <CardTitle className="text-white">Registrar Datos de Entrega</CardTitle>
+        <CardTitle className="text-black">Registrar Datos de Entrega</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             <div>
-              <Label htmlFor="fecha-entrega" className="text-white/80">
+              <Label htmlFor="fecha-entrega" className="text-black/80">
                 Fecha
               </Label>
               <Input
@@ -242,12 +242,12 @@ export function DeliveryForm({ onAddDelivery }: { onAddDelivery: (data: Delivery
                 type="date"
                 value={formData.fecha}
                 onChange={(e) => setFormData({ ...formData, fecha: e.target.value })}
-                className="bg-primary-dark/50 border-primary-light/30 text-white"
+                className="bg-primary-dark/10 border-primary-medium/30 text-primary-dark"
                 required
               />
             </div>
             <div>
-              <Label htmlFor="total-pedidos" className="text-white/80">
+              <Label htmlFor="total-pedidos" className="text-black/80">
                 Total de Pedidos
               </Label>
               <Input
@@ -255,12 +255,12 @@ export function DeliveryForm({ onAddDelivery }: { onAddDelivery: (data: Delivery
                 type="number"
                 value={formData.totalPedidos}
                 onChange={(e) => setFormData({ ...formData, totalPedidos: e.target.value })}
-                className="bg-primary-dark/50 border-primary-light/30 text-white"
+                className="bg-primary-dark/10 border-primary-medium/30 text-primary-dark"
                 required
               />
             </div>
             <div>
-              <Label htmlFor="pedidos-entregados" className="text-white/80">
+              <Label htmlFor="pedidos-entregados" className="text-black/80">
                 Pedidos Entregados
               </Label>
               <Input
@@ -268,12 +268,12 @@ export function DeliveryForm({ onAddDelivery }: { onAddDelivery: (data: Delivery
                 type="number"
                 value={formData.entregados}
                 onChange={(e) => setFormData({ ...formData, entregados: e.target.value })}
-                className="bg-primary-dark/50 border-primary-light/30 text-white"
+                className="bg-primary-dark/10 border-primary-medium/30 text-primary-dark"
                 required
               />
             </div>
             <div>
-              <Label htmlFor="rechazos" className="text-white/80">
+              <Label htmlFor="rechazos" className="text-black/80">
                 Rechazos en Puerta
               </Label>
               <Input
@@ -281,11 +281,11 @@ export function DeliveryForm({ onAddDelivery }: { onAddDelivery: (data: Delivery
                 type="number"
                 value={formData.rechazados}
                 onChange={(e) => setFormData({ ...formData, rechazados: e.target.value })}
-                className="bg-primary-dark/50 border-primary-light/30 text-white"
+                className="bg-primary-dark/10 border-primary-medium/30 text-primary-dark"
               />
             </div>
             <div>
-              <Label htmlFor="no-ubicados" className="text-white/80">
+              <Label htmlFor="no-ubicados" className="text-black/80">
                 No Ubicados
               </Label>
               <Input
@@ -293,12 +293,12 @@ export function DeliveryForm({ onAddDelivery }: { onAddDelivery: (data: Delivery
                 type="number"
                 value={formData.noUbicados}
                 onChange={(e) => setFormData({ ...formData, noUbicados: e.target.value })}
-                className="bg-primary-dark/50 border-primary-light/30 text-white"
+                className="bg-primary-dark/10 border-primary-medium/30 text-primary-dark"
               />
             </div>
           </div>
           <div>
-            <Label htmlFor="costo-envio" className="text-white/80">
+            <Label htmlFor="costo-envio" className="text-black/80">
               Costo de Envío Total (S/)
             </Label>
             <Input
@@ -307,10 +307,10 @@ export function DeliveryForm({ onAddDelivery }: { onAddDelivery: (data: Delivery
               step="0.01"
               value={formData.costoEnvio}
               onChange={(e) => setFormData({ ...formData, costoEnvio: e.target.value })}
-              className="bg-primary-dark/50 border-primary-light/30 text-white"
+              className="bg-primary-dark/10 border-primary-medium/30 text-primary-dark"
             />
           </div>
-          <Button type="submit" className="bg-accent hover:bg-accent/90 text-black">
+          <Button type="submit" className="bg-accent hover:bg-accent/90 text-white">
             <Plus className="h-4 w-4 mr-2" />
             Guardar Datos de Entrega
           </Button>
@@ -325,21 +325,21 @@ export function CampaignTable({
   onDeleteCampaign,
 }: { campaigns: CampaignData[]; onDeleteCampaign: (id: string) => void }) {
   return (
-    <Card className="bg-primary-medium/20 border-primary-light/20 animate-fade-in">
+    <Card className="bg-primary-light/20 border-primary-medium/20 animate-fade-in">
       <CardContent className="p-0">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-primary-light/20">
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">FECHA</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">PLATAFORMA</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">TIPO</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">INVERSIÓN</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">CONVERSIONES</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">VENTAS</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">CPA</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">ROAS</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">ACCIONES</th>
+              <tr className="border-b border-primary-medium/20">
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">FECHA</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">PLATAFORMA</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">TIPO</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">INVERSIÓN</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">CONVERSIONES</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">VENTAS</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">CPA</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">ROAS</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">ACCIONES</th>
               </tr>
             </thead>
             <tbody>
@@ -349,10 +349,10 @@ export function CampaignTable({
                 return (
                   <tr
                     key={campaign.id}
-                    className="border-b border-primary-light/10 hover:bg-primary-medium/10 transition-colors"
+                    className="border-b border-primary-medium/10 hover:bg-primary-medium/10 transition-colors"
                   >
-                    <td className="text-white py-4 px-6">{campaign.fecha}</td>
-                    <td className="text-white py-4 px-6">{campaign.plataforma}</td>
+                    <td className="text-primary-dark py-4 px-6">{campaign.fecha}</td>
+                    <td className="text-primary-dark py-4 px-6">{campaign.plataforma}</td>
                     <td className="py-4 px-6">
                       <Badge
                         variant="outline"
@@ -365,11 +365,11 @@ export function CampaignTable({
                         {campaign.tipo}
                       </Badge>
                     </td>
-                    <td className="text-white py-4 px-6">S/ {campaign.inversion.toFixed(2)}</td>
-                    <td className="text-white py-4 px-6">{campaign.conversiones}</td>
-                    <td className="text-white py-4 px-6">S/ {campaign.ventas.toFixed(2)}</td>
-                    <td className="text-white py-4 px-6">S/ {cpa.toFixed(2)}</td>
-                    <td className="text-white py-4 px-6">{roas.toFixed(2)}x</td>
+                    <td className="text-primary-dark py-4 px-6">S/ {campaign.inversion.toFixed(2)}</td>
+                    <td className="text-primary-dark py-4 px-6">{campaign.conversiones}</td>
+                    <td className="text-primary-dark py-4 px-6">S/ {campaign.ventas.toFixed(2)}</td>
+                    <td className="text-primary-dark py-4 px-6">S/ {cpa.toFixed(2)}</td>
+                    <td className="text-primary-dark py-4 px-6">{roas.toFixed(2)}x</td>
                     <td className="py-4 px-6">
                       <Button
                         variant="ghost"
@@ -385,7 +385,7 @@ export function CampaignTable({
               })}
               {campaigns.length === 0 && (
                 <tr>
-                  <td colSpan={9} className="text-center text-white/60 py-12">
+                  <td colSpan={9} className="text-center text-black/60 py-12">
                     No hay campañas registradas aún.
                   </td>
                 </tr>
@@ -403,20 +403,20 @@ export function DeliveryTable({
   onDeleteDelivery,
 }: { deliveries: DeliveryData[]; onDeleteDelivery: (id: string) => void }) {
   return (
-    <Card className="bg-primary-medium/20 border-primary-light/20 animate-fade-in">
+    <Card className="bg-primary-light/20 border-primary-medium/20 animate-fade-in">
       <CardContent className="p-0">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-primary-light/20">
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">FECHA</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">TOTAL PEDIDOS</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">ENTREGADOS</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">RECHAZADOS</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">NO UBICADOS</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">TASA ENTREGA</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">COSTO ENVÍO</th>
-                <th className="text-left text-white/60 text-sm font-medium py-4 px-6">ACCIONES</th>
+              <tr className="border-b border-primary-medium/20">
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">FECHA</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">TOTAL PEDIDOS</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">ENTREGADOS</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">RECHAZADOS</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">NO UBICADOS</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">TASA ENTREGA</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">COSTO ENVÍO</th>
+                <th className="text-left text-black/60 text-sm font-medium py-4 px-6">ACCIONES</th>
               </tr>
             </thead>
             <tbody>
@@ -425,15 +425,15 @@ export function DeliveryTable({
                 return (
                   <tr
                     key={delivery.id}
-                    className="border-b border-primary-light/10 hover:bg-primary-medium/10 transition-colors"
+                    className="border-b border-primary-medium/10 hover:bg-primary-medium/10 transition-colors"
                   >
-                    <td className="text-white py-4 px-6">{delivery.fecha}</td>
-                    <td className="text-white py-4 px-6">{delivery.totalPedidos}</td>
-                    <td className="text-white py-4 px-6">{delivery.entregados}</td>
-                    <td className="text-white py-4 px-6">{delivery.rechazados}</td>
-                    <td className="text-white py-4 px-6">{delivery.noUbicados}</td>
-                    <td className="text-white py-4 px-6">{tasaEntrega.toFixed(1)}%</td>
-                    <td className="text-white py-4 px-6">S/ {delivery.costoEnvio.toFixed(2)}</td>
+                    <td className="text-primary-dark py-4 px-6">{delivery.fecha}</td>
+                    <td className="text-primary-dark py-4 px-6">{delivery.totalPedidos}</td>
+                    <td className="text-primary-dark py-4 px-6">{delivery.entregados}</td>
+                    <td className="text-primary-dark py-4 px-6">{delivery.rechazados}</td>
+                    <td className="text-primary-dark py-4 px-6">{delivery.noUbicados}</td>
+                    <td className="text-primary-dark py-4 px-6">{tasaEntrega.toFixed(1)}%</td>
+                    <td className="text-primary-dark py-4 px-6">S/ {delivery.costoEnvio.toFixed(2)}</td>
                     <td className="py-4 px-6">
                       <Button
                         variant="ghost"
@@ -449,7 +449,7 @@ export function DeliveryTable({
               })}
               {deliveries.length === 0 && (
                 <tr>
-                  <td colSpan={8} className="text-center text-white/60 py-12">
+                  <td colSpan={8} className="text-center text-black/60 py-12">
                     No hay datos de entregas registrados aún.
                   </td>
                 </tr>

@@ -31,42 +31,42 @@ export default function DeliveriesSection({ deliveries, setDeliveries, deleteDel
   return (
     <div className="space-y-6">
       <div className="animate-fade-in">
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Control de Entregas</h1>
-        <p className="text-white/70">Registra y monitorea las entregas COD</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-black mb-2">Control de Entregas</h1>
+        <p className="text-black/70">Registra y monitorea las entregas COD</p>
       </div>
       <DeliveryForm onAddDelivery={delivery => setDeliveries([delivery, ...deliveries])} />
       {/* Metrics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
-        <Card className="bg-primary-medium/20 border-green-500/30 hover:bg-primary-medium/30 transition-all duration-300">
+        <Card className="bg-primary-light/20 border-green-500/30 hover:bg-primary-light/30 transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardDescription className="text-white/60 text-sm">TASA DE ENTREGA</CardDescription>
+            <CardDescription className="text-black/60 text-sm">TASA DE ENTREGA</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-white mb-1">{avgTasaEntrega.toFixed(1)}%</div>
+            <div className="text-3xl font-bold text-black mb-1">{avgTasaEntrega.toFixed(1)}%</div>
             <div className="flex items-center text-green-400 text-sm">
               <ArrowUp className="h-4 w-4 mr-1" />
               2.3% vs promedio
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-primary-medium/20 border-yellow-500/30 hover:bg-primary-medium/30 transition-all duration-300">
+        <Card className="bg-primary-light/20 border-yellow-500/30 hover:bg-primary-light/30 transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardDescription className="text-white/60 text-sm">RECHAZOS</CardDescription>
+            <CardDescription className="text-black/60 text-sm">RECHAZOS</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-white mb-1">{avgRechazos.toFixed(1)}%</div>
+            <div className="text-3xl font-bold text-black mb-1">{avgRechazos.toFixed(1)}%</div>
             <div className="flex items-center text-yellow-400 text-sm">
               <ArrowUp className="h-4 w-4 mr-1" />
               1.1% vs promedio
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-primary-medium/20 border-red-500/30 hover:bg-primary-medium/30 transition-all duration-300">
+        <Card className="bg-primary-light/20 border-red-500/30 hover:bg-primary-light/30 transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardDescription className="text-white/60 text-sm">NO UBICADOS</CardDescription>
+            <CardDescription className="text-black/60 text-sm">NO UBICADOS</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-white mb-1">{avgNoUbicados.toFixed(1)}%</div>
+            <div className="text-3xl font-bold text-black mb-1">{avgNoUbicados.toFixed(1)}%</div>
             <div className="flex items-center text-green-400 text-sm">
               <ArrowDown className="h-4 w-4 mr-1" />
               0.8% vs promedio
@@ -75,9 +75,9 @@ export default function DeliveriesSection({ deliveries, setDeliveries, deleteDel
         </Card>
       </div>
       {/* Chart */}
-      <Card className="bg-primary-medium/20 border-primary-light/20 animate-fade-in">
+      <Card className="bg-primary-light/20 border-primary-medium/20 animate-fade-in">
         <CardHeader>
-          <CardTitle className="text-white">Evolución de Entregas - Últimos 30 días</CardTitle>
+          <CardTitle className="text-black">Evolución de Entregas - Últimos 30 días</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="h-64 relative">
@@ -100,8 +100,8 @@ export default function DeliveriesSection({ deliveries, setDeliveries, deleteDel
                 fill="url(#deliveryGradient)"
               />
             </svg>
-            <div className="absolute bottom-4 left-4 text-white/60 text-sm">17 nov</div>
-            <div className="absolute bottom-4 right-4 text-white/60 text-sm">19 nov</div>
+            <div className="absolute bottom-4 left-4 text-black/60 text-sm">17 nov</div>
+            <div className="absolute bottom-4 right-4 text-black/60 text-sm">19 nov</div>
           </div>
         </CardContent>
       </Card>

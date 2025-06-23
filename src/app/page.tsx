@@ -8,16 +8,16 @@ import Image from "next/image"
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-black">
-      {/* Navbar - Meta Style but Dark */}
-      <nav className="border-b border-primary-medium/20 backdrop-blur-sm bg-black/80 sticky top-0 z-50 transition-all duration-300">
+    <div className="min-h-screen bg-f2">
+      {/* Navbar - Meta Style pero claro */}
+      <nav className="border-b border-primary-medium/20 backdrop-blur-sm bg-primary-dark/80 sticky top-0 z-50 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center group">
               <div className="flex-shrink-0">
                 <div className="h-8 w-8 bg-gradient-to-r from-accent to-primary-light rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                  <ShoppingCart className="h-5 w-5 text-black" />
+                  <ShoppingCart className="h-5 w-5 text-white" />
                 </div>
               </div>
               <div className="ml-3">
@@ -77,12 +77,12 @@ export default function HomePage() {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="text-white hover:bg-primary-medium/20 transition-colors duration-300"
+                    className="text-primary-dark hover:bg-primary-medium/20 transition-colors duration-300"
                   >
                     <Menu className="h-6 w-6" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="bg-black border-primary-medium/20">
+                <SheetContent side="right" className="bg-primary-dark border-primary-medium/20">
                   <div className="flex flex-col space-y-4 mt-8">
                     <Link
                       href="#"
@@ -123,20 +123,20 @@ export default function HomePage() {
       </nav>
 
       {/* Hero Section - Meta Style */}
-      <section className="relative overflow-hidden bg-black min-h-[90vh] flex items-center justify-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
+      <section className="relative overflow-hidden bg-f2 min-h-[90vh] flex items-center justify-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32 animate-fade-in-down">
           <div className="text-center">
-            <Badge className="bg-primary-medium/20 text-accent border-accent/20 mb-6 sm:mb-8 transition-all duration-300 hover:scale-105 hover:bg-primary-medium/30">
+            <Badge className="bg-primary-light/20 text-accent border-accent/20 mb-6 sm:mb-8 transition-all duration-300 hover:scale-105 hover:bg-primary-light/30">
               🚀 Plataforma Todo-en-Uno
             </Badge>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 transition-all duration-700 hover:scale-105 leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-primary-dark mb-6 transition-all duration-700 hover:scale-105 leading-tight">
               Creamos el futuro del
               <br />
-              <span className="bg-gradient-to-r from-accent to-primary-light bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-primary-medium to-primary-light bg-clip-text text-transparent">
                 comercio digital
               </span>
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-white/80 mb-8 max-w-4xl mx-auto leading-relaxed transition-opacity duration-500 px-4">
+            <p className="text-lg sm:text-xl md:text-2xl text-primary-medium mb-8 max-w-4xl mx-auto leading-relaxed transition-opacity duration-500 px-4">
               Conectamos marcas con clientes a través de tecnología inteligente, automatización avanzada y experiencias
               excepcionales que transforman negocios.
             </p>
@@ -145,7 +145,7 @@ export default function HomePage() {
               <Link href="/herramientas">
                 <Button
                   size="lg"
-                  className="bg-accent hover:bg-accent/90 text-black font-semibold text-base sm:text-lg px-8 sm:px-12 py-4 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/25 rounded-full"
+                  className="bg-primary-medium hover:bg-primary-dark text-white font-semibold text-base sm:text-lg px-8 sm:px-12 py-4 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-accent/25 rounded-full"
                 >
                   Nuestra Plataforma
                 </Button>
@@ -247,18 +247,18 @@ export default function HomePage() {
             {/* Left Card - Dashboard */}
             <Card className="bg-gradient-to-br from-primary-medium/30 to-primary-light/30 border-accent/20 backdrop-blur-sm hover:scale-105 transition-all duration-500 overflow-hidden">
               <div className="aspect-video bg-gradient-to-br from-accent/10 to-primary-light/10 flex items-center justify-center relative">
-                <div className="absolute inset-0 bg-black/20 rounded-lg flex items-center justify-center">
+                <div className="absolute inset-0 bg-primary-dark/20 rounded-lg flex items-center justify-center">
                   <img src="/img2.jpg" alt="Dashboard" className="w-full h-56 sm:h-72 md:h-80 lg:h-96 object-cover rounded-t-2xl shadow-2xl" />
                 </div>
               </div>
               <CardHeader className="p-8">
-                <CardTitle className="text-2xl mb-4">Dashboard Completo</CardTitle>
-                <CardDescription className="text-black/70 text-lg mb-6">
+                <CardTitle className="text-2xl mb-4 text-white">Dashboard Completo</CardTitle>
+                <CardDescription className="text-white/80 text-lg mb-6">
                   Visualiza todas tus métricas importantes: inversión, conversiones, CPA y ROAS en tiempo real con
                   gráficos interactivos y análisis predictivo.
                 </CardDescription>
                 <Link href="/herramientas">
-                  <Button className="bg-accent hover:bg-accent/90 text-black font-semibold rounded-full">
+                  <Button className="bg-accent hover:bg-accent/90 text-primary-dark font-semibold rounded-full">
                     Explorar Dashboard
                   </Button>
                 </Link>
@@ -266,22 +266,22 @@ export default function HomePage() {
             </Card>
 
             {/* Right Card - Calculator */}
-            <Card className="bg-gradient-to-br from-blue-500/20 to-purple-500/20 border-blue-500/30 backdrop-blur-sm hover:scale-105 transition-all duration-500 overflow-hidden">
-              <div className="aspect-video bg-gradient-to-br from-blue-500/10 to-purple-500/10 flex items-center justify-center relative">
-                <div className="absolute inset-0 bg-black/20 rounded-lg flex items-center justify-center">
+            <Card className="bg-gradient-to-br from-primary-medium/30 to-primary-light/30 border-accent/20 backdrop-blur-sm hover:scale-105 transition-all duration-500 overflow-hidden">
+              <div className="aspect-video bg-gradient-to-br from-accent/10 to-primary-light/10 flex items-center justify-center relative">
+                <div className="absolute inset-0 bg-primary-dark/20 rounded-lg flex items-center justify-center">
                   <img src="/img3.jpg" alt="Calculadora" className="w-full h-56 sm:h-72 md:h-80 lg:h-96 object-cover rounded-t-2xl shadow-2xl" />
                 </div>
               </div>
               <CardHeader className="p-8">
-                <CardTitle className="text-2xl mb-4">Calculadora de Rentabilidad</CardTitle>
-                <CardDescription className="text-black/70 text-lg mb-6">
+                <CardTitle className="text-2xl mb-4 text-white">Calculadora de Rentabilidad</CardTitle>
+                <CardDescription className="text-white/80 text-lg mb-6">
                   Calcula automáticamente CPA real, ROAS, ROI y margen neto de tus campañas para optimizar tu inversión
                   publicitaria con precisión.
                 </CardDescription>
                 <Link href="/herramientas">
                   <Button
                     variant="outline"
-                    className="border-blue-400/30 text-blue-400 hover:bg-blue-400 hover:text-black rounded-full"
+                    className="border-accent/30 text-accent hover:bg-accent hover:text-primary-dark rounded-full"
                   >
                     Usar Calculadora
                   </Button>

@@ -26,12 +26,12 @@ export default function CalculatorSection({
   return (
     <div className="space-y-6">
       <div className="animate-fade-in">
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Calculadora de Rentabilidad</h1>
-        <p className="text-white/70">Analiza la rentabilidad de tus campañas COD</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-black mb-2">Calculadora de Rentabilidad</h1>
+        <p className="text-black/70">Analiza la rentabilidad de tus campañas COD</p>
       </div>
-      <Card className="bg-primary-medium/20 border-primary-light/20 animate-fade-in">
+      <Card className="bg-primary-light/20 border-primary-medium/20 animate-fade-in">
         <CardHeader>
-          <CardTitle className="text-white">Parámetros de Cálculo</CardTitle>
+          <CardTitle className="text-primary-dark">Parámetros de Cálculo</CardTitle>
         </CardHeader>
         <CardContent>
           <Tabs value={activeCalcTab} onValueChange={handleTabChange} className="w-full">
@@ -55,7 +55,7 @@ export default function CalculatorSection({
                 {/* Inputs Conversiones */}
                 {/* ... (igual que en page.tsx) ... */}
                 <div>
-                  <Label htmlFor="inversion-pub" className="text-white/80">
+                  <Label htmlFor="inversion-pub" className="text-black/80">
                     Inversión Publicitaria (S/)
                   </Label>
                   <Input
@@ -67,7 +67,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="cpa-calc" className="text-white/80">
+                  <Label htmlFor="cpa-calc" className="text-black/80">
                     CPA (S/)
                   </Label>
                   <Input
@@ -79,7 +79,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="tasa-cierre" className="text-white/80">
+                  <Label htmlFor="tasa-cierre" className="text-black/80">
                     Tasa de Cierre (%)
                   </Label>
                   <Input
@@ -91,7 +91,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="precio-producto" className="text-white/80">
+                  <Label htmlFor="precio-producto" className="text-black/80">
                     Precio del Producto (S/)
                   </Label>
                   <Input
@@ -103,7 +103,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="costo-producto" className="text-white/80">
+                  <Label htmlFor="costo-producto" className="text-black/80">
                     Costo del Producto (S/)
                   </Label>
                   <Input
@@ -115,7 +115,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="gasto-operativo" className="text-white/80">
+                  <Label htmlFor="gasto-operativo" className="text-black/80">
                     Gasto Operativo/Pedido (S/)
                   </Label>
                   <Input
@@ -127,7 +127,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="tasa-entrega-calc" className="text-white/80">
+                  <Label htmlFor="tasa-entrega-calc" className="text-black/80">
                     Tasa de Entrega (%)
                   </Label>
                   <Input
@@ -144,7 +144,7 @@ export default function CalculatorSection({
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="comision-courier" className="text-white/80">
+                  <Label htmlFor="comision-courier" className="text-black/80">
                     Comisión Courier (S/)
                   </Label>
                   <Input
@@ -176,7 +176,7 @@ export default function CalculatorSection({
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {/* Inputs WhatsApp */}
                 <div>
-                  <Label htmlFor="inversion-pub-wa" className="text-white/80">
+                  <Label htmlFor="inversion-pub-wa" className="text-black/80">
                     Inversión Publicitaria (S/)
                   </Label>
                   <Input
@@ -188,7 +188,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="costo-mensaje" className="text-white/80">
+                  <Label htmlFor="costo-mensaje" className="text-black/80">
                     Costo por Mensaje (CPM) (S/)
                   </Label>
                   <Input
@@ -200,7 +200,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="tasa-conversion-wa" className="text-white/80">
+                  <Label htmlFor="tasa-conversion-wa" className="text-black/80">
                     Tasa de Conversión WhatsApp (%)
                   </Label>
                   <Input
@@ -217,7 +217,7 @@ export default function CalculatorSection({
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="precio-producto-wa" className="text-white/80">
+                  <Label htmlFor="precio-producto-wa" className="text-black/80">
                     Precio del Producto (S/)
                   </Label>
                   <Input
@@ -229,7 +229,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="costo-producto-wa" className="text-white/80">
+                  <Label htmlFor="costo-producto-wa" className="text-black/80">
                     Costo del Producto (S/)
                   </Label>
                   <Input
@@ -241,7 +241,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="gasto-operativo-wa" className="text-white/80">
+                  <Label htmlFor="gasto-operativo-wa" className="text-black/80">
                     Gasto Operativo/Pedido (S/)
                   </Label>
                   <Input
@@ -253,7 +253,7 @@ export default function CalculatorSection({
                   />
                 </div>
                 <div>
-                  <Label htmlFor="tasa-entrega-wa" className="text-white/80">
+                  <Label htmlFor="tasa-entrega-wa" className="text-black/80">
                     Tasa de Entrega (%)
                   </Label>
                   <Input
@@ -270,7 +270,7 @@ export default function CalculatorSection({
                   )}
                 </div>
                 <div>
-                  <Label htmlFor="comision-courier-wa" className="text-white/80">
+                  <Label htmlFor="comision-courier-wa" className="text-black/80">
                     Comisión Courier (S/)
                   </Label>
                   <Input
@@ -302,42 +302,42 @@ export default function CalculatorSection({
       </Card>
       {/* Resultados */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 animate-fade-in">
-        <Card className="bg-primary-medium/20 border-blue-500/30 hover:bg-primary-medium/30 transition-all duration-300">
+        <Card className="bg-primary-light/20 border-blue-500/30 hover:bg-primary-light/30 transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardDescription className="text-white/60 text-sm">CPA REAL</CardDescription>
+            <CardDescription className="text-black/60 text-sm">CPA REAL</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl sm:text-3xl font-bold text-white">
+            <div className="text-2xl sm:text-3xl font-bold text-black">
               {calcResults.cpaReal !== null && !isNaN(calcResults.cpaReal) ? `S/ ${calcResults.cpaReal.toFixed(2)}` : "--"}
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-primary-medium/20 border-green-500/30 hover:bg-primary-medium/30 transition-all duration-300">
+        <Card className="bg-primary-light/20 border-green-500/30 hover:bg-primary-light/30 transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardDescription className="text-white/60 text-sm">ROAS</CardDescription>
+            <CardDescription className="text-black/60 text-sm">ROAS</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl sm:text-3xl font-bold text-white">
+            <div className="text-2xl sm:text-3xl font-bold text-black">
               {calcResults.roas !== null && !isNaN(calcResults.roas) ? `${calcResults.roas.toFixed(2)}x` : "--"}
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-primary-medium/20 border-yellow-500/30 hover:bg-primary-medium/30 transition-all duration-300">
+        <Card className="bg-primary-light/20 border-yellow-500/30 hover:bg-primary-light/30 transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardDescription className="text-white/60 text-sm">ROI</CardDescription>
+            <CardDescription className="text-black/60 text-sm">ROI</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl sm:text-3xl font-bold text-white">
+            <div className="text-2xl sm:text-3xl font-bold text-black">
               {calcResults.roi !== null && !isNaN(calcResults.roi) ? `${calcResults.roi.toFixed(1)}%` : "--"}
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-primary-medium/20 border-purple-500/30 hover:bg-primary-medium/30 transition-all duration-300">
+        <Card className="bg-primary-light/20 border-purple-500/30 hover:bg-primary-light/30 transition-all duration-300">
           <CardHeader className="pb-2">
-            <CardDescription className="text-white/60 text-sm">MARGEN NETO</CardDescription>
+            <CardDescription className="text-black/60 text-sm">MARGEN NETO</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl sm:text-3xl font-bold text-white">
+            <div className="text-2xl sm:text-3xl font-bold text-black">
               {calcResults.margenNeto !== null && !isNaN(calcResults.margenNeto) ? `S/ ${calcResults.margenNeto.toFixed(2)}` : "--"}
             </div>
           </CardContent>
