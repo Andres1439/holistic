@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trash2, TrendingUp, Calculator, DollarSign, Target, Percent, AlertTriangle } from "lucide-react";
 import dynamic from 'next/dynamic';
+import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
+import { useState, useMemo } from 'react';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 export default function CalculatorSection({
@@ -24,14 +26,56 @@ export default function CalculatorSection({
   clearAllData,
   calculateResults,
   handleTabChange,
-  isDollarMode,
-  setIsDollarMode,
-  dollarRate,
-  setDollarRate,
-  convertCurrency,
+  currency,
+  setCurrency,
   getCurrencySymbol
 }: any) {
   const derived = calculateDerivedMetrics(calcResults, inputValues);
+  const [showHeatmap, setShowHeatmap] = useState(false);
+
+  // Optimización de performance para el heatmap
+  const heatmapData = useMemo(() => {
+    const cpaValues = [20, 30, 40, 50, 60, 70, 80, 90, 100];
+    const conversionRates = [10, 15, 20, 25, 30, 35, 40, 45, 50];
+    const investment = Number(inputValues.inversionPublicitaria) || 2000;
+    const productPrice = Number(inputValues.precioProducto) || 200;
+    const productCost = Number(inputValues.costoProducto) || 80;
+    const operativeCost = Number(inputValues.gastoOperativo) || 20;
+    const courierCost = Number(inputValues.comisionCourier) || 15;
+    const deliveryRate = (Number(inputValues.tasaEntrega) || 85) / 100;
+    const costPerOrder = productCost + operativeCost + courierCost;
+    return conversionRates.map(convRate => ({
+      name: convRate + '%',
+      data: cpaValues.map(cpa => {
+        const leads = investment / cpa;
+        const conversions = leads * (convRate / 100);
+        const deliveries = conversions * deliveryRate;
+        const revenue = deliveries * productPrice;
+        const variableCosts = deliveries * costPerOrder;
+        const totalCosts = variableCosts + investment;
+        const profit = revenue - totalCosts;
+        const roi = (profit / investment) * 100;
+        return {
+          x: cpa.toString(),
+          y: Math.round(roi * 10) / 10
+        };
+      })
+    }));
+  }, [
+    inputValues.inversionPublicitaria,
+    inputValues.precioProducto,
+    inputValues.costoProducto,
+    inputValues.gastoOperativo,
+    inputValues.comisionCourier,
+    inputValues.tasaEntrega
+  ]);
+
+  // Handler para Enter en cualquier input
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      calculateResults();
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -53,34 +97,19 @@ export default function CalculatorSection({
                 <CardDescription className="text-blue-700">Configura los valores para tu análisis</CardDescription>
               </div>
             </div>
-            
-            {/* Botón de cambio de moneda */}
+            {/* Selector de moneda */}
             <div className="flex items-center space-x-3">
-              <div className="flex items-center space-x-2">
-                <Label htmlFor="dollar-rate" className="text-sm text-blue-700 font-medium">
-                  Tipo de cambio:
-                </Label>
-                <Input
-                  id="dollar-rate"
-                  type="number"
-                  value={dollarRate}
-                  onChange={(e) => setDollarRate(e.target.value)}
-                  className="w-20 h-8 text-sm border-blue-200 focus:border-blue-500 focus:ring-blue-500"
-                  placeholder="3.75"
-                  step="0.01"
-                  min="0"
-                />
-              </div>
-              <Button
-                onClick={() => setIsDollarMode(!isDollarMode)}
-                variant="outline"
-                className="border-blue-300 text-blue-700 hover:bg-blue-50 hover:text-blue-900 font-medium transition-all duration-300"
-              >
-                <span className="text-lg font-bold">{getCurrencySymbol()}</span>
-                <span className="ml-2 text-sm">
-                  {isDollarMode ? "Dólares" : "Soles"}
-                </span>
-              </Button>
+              <Select value={currency} onValueChange={setCurrency}>
+                <SelectTrigger className="w-32">
+                  <SelectValue placeholder="Moneda" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="USD">USD - Dólar</SelectItem>
+                  <SelectItem value="PEN">PEN - Sol</SelectItem>
+                  <SelectItem value="MXN">MXN - Peso Mexicano</SelectItem>
+                  <SelectItem value="COL">COL - Peso Colombiano</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </CardHeader>
@@ -113,6 +142,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.inversionPublicitaria}
                     onChange={(e) => handleInputChange('inversionPublicitaria', e.target.value, 'conversiones')}
+                    onKeyDown={handleKeyDown}
                     className="bg-white border-gray-200 text-gray-900 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
                     placeholder="0.00"
                   />
@@ -126,6 +156,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.cpa}
                     onChange={(e) => handleInputChange('cpa', e.target.value, 'conversiones')}
+                    onKeyDown={handleKeyDown}
                     className="bg-white border-gray-200 text-gray-900 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
                     placeholder="0.00"
                   />
@@ -139,6 +170,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.tasaCierre}
                     onChange={(e) => handleInputChange('tasaCierre', e.target.value, 'conversiones')}
+                    onKeyDown={handleKeyDown}
                     className="bg-white border-gray-200 text-gray-900 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
                     placeholder="0"
                   />
@@ -152,6 +184,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.precioProducto}
                     onChange={(e) => handleInputChange('precioProducto', e.target.value, 'shared')}
+                    onKeyDown={handleKeyDown}
                     className="bg-white border-gray-200 text-gray-900 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
                     placeholder="0.00"
                   />
@@ -165,6 +198,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.costoProducto}
                     onChange={(e) => handleInputChange('costoProducto', e.target.value, 'shared')}
+                    onKeyDown={handleKeyDown}
                     className="bg-white border-gray-200 text-gray-900 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
                     placeholder="0.00"
                   />
@@ -178,6 +212,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.gastoOperativo}
                     onChange={(e) => handleInputChange('gastoOperativo', e.target.value, 'shared')}
+                    onKeyDown={handleKeyDown}
                     className="bg-white border-gray-200 text-gray-900 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
                     placeholder="0.00"
                   />
@@ -191,6 +226,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.tasaEntrega}
                     onChange={(e) => handleInputChange('tasaEntrega', e.target.value, 'conversiones')}
+                    onKeyDown={handleKeyDown}
                     min="0"
                     max="100"
                     className="bg-white border-gray-200 text-gray-900 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
@@ -212,6 +248,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.comisionCourier}
                     onChange={(e) => handleInputChange('comisionCourier', e.target.value, 'shared')}
+                    onKeyDown={handleKeyDown}
                     className="bg-white border-gray-200 text-gray-900 focus:border-blue-500 focus:ring-blue-500 transition-all duration-300"
                     placeholder="0.00"
                   />
@@ -248,6 +285,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.inversionPublicitaria}
                     onChange={(e) => handleInputChange('inversionPublicitaria', e.target.value, 'whatsapp')}
+                    onKeyDown={handleKeyDown}
                     className="bg-white border-gray-200 text-gray-900 focus:border-green-500 focus:ring-green-500 transition-all duration-300"
                     placeholder="0.00"
                   />
@@ -261,6 +299,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.costoPorMensaje}
                     onChange={(e) => handleInputChange('costoPorMensaje', e.target.value, 'whatsapp')}
+                    onKeyDown={handleKeyDown}
                     className="bg-white border-gray-200 text-gray-900 focus:border-green-500 focus:ring-green-500 transition-all duration-300"
                     placeholder="0.00"
                   />
@@ -274,6 +313,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.tasaConversionWhatsApp}
                     onChange={(e) => handleInputChange('tasaConversionWhatsApp', e.target.value, 'whatsapp')}
+                    onKeyDown={handleKeyDown}
                     min="0"
                     max="100"
                     className="bg-white border-gray-200 text-gray-900 focus:border-green-500 focus:ring-green-500 transition-all duration-300"
@@ -295,6 +335,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.precioProducto}
                     onChange={(e) => handleInputChange('precioProducto', e.target.value, 'shared')}
+                    onKeyDown={handleKeyDown}
                     className="bg-white border-gray-200 text-gray-900 focus:border-green-500 focus:ring-green-500 transition-all duration-300"
                     placeholder="0.00"
                   />
@@ -308,6 +349,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.costoProducto}
                     onChange={(e) => handleInputChange('costoProducto', e.target.value, 'shared')}
+                    onKeyDown={handleKeyDown}
                     className="bg-white border-gray-200 text-gray-900 focus:border-green-500 focus:ring-green-500 transition-all duration-300"
                     placeholder="0.00"
                   />
@@ -321,6 +363,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.gastoOperativo}
                     onChange={(e) => handleInputChange('gastoOperativo', e.target.value, 'shared')}
+                    onKeyDown={handleKeyDown}
                     className="bg-white border-gray-200 text-gray-900 focus:border-green-500 focus:ring-green-500 transition-all duration-300"
                     placeholder="0.00"
                   />
@@ -334,6 +377,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.tasaEntrega}
                     onChange={(e) => handleInputChange('tasaEntrega', e.target.value, 'whatsapp')}
+                    onKeyDown={handleKeyDown}
                     min="0"
                     max="100"
                     className="bg-white border-gray-200 text-gray-900 focus:border-green-500 focus:ring-green-500 transition-all duration-300"
@@ -355,6 +399,7 @@ export default function CalculatorSection({
                     type="number"
                     value={inputValues.comisionCourier}
                     onChange={(e) => handleInputChange('comisionCourier', e.target.value, 'shared')}
+                    onKeyDown={handleKeyDown}
                     className="bg-white border-gray-200 text-gray-900 focus:border-green-500 focus:ring-green-500 transition-all duration-300"
                     placeholder="0.00"
                   />
@@ -383,8 +428,8 @@ export default function CalculatorSection({
       </Card>
 
       {/* Indicadores de KPIs (scorecards) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-in mt-6">
-        <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden flex flex-col items-center justify-center p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 animate-fade-in mt-6">
+        <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden flex flex-col items-center justify-center p-6 max-w-xs w-56 mx-auto border-t-4 border-blue-500">
           <div className="flex items-center space-x-3 mb-2">
             <div className="h-10 w-10 bg-blue-500 rounded-lg flex items-center justify-center">
               <DollarSign className="h-5 w-5 text-white" />
@@ -393,7 +438,7 @@ export default function CalculatorSection({
           </div>
           <div className="text-3xl font-bold text-blue-700">{Number((calcResults.cpaReal ?? 0).toFixed(2))}</div>
         </Card>
-        <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden flex flex-col items-center justify-center p-6">
+        <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden flex flex-col items-center justify-center p-6 max-w-xs w-56 mx-auto border-t-4 border-green-500">
           <div className="flex items-center space-x-3 mb-2">
             <div className="h-10 w-10 bg-green-500 rounded-lg flex items-center justify-center">
               <Target className="h-5 w-5 text-white" />
@@ -402,7 +447,7 @@ export default function CalculatorSection({
           </div>
           <div className="text-3xl font-bold text-green-700">{Number((calcResults.roas ?? 0).toFixed(2))}</div>
         </Card>
-        <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden flex flex-col items-center justify-center p-6">
+        <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden flex flex-col items-center justify-center p-6 max-w-xs w-56 mx-auto border-t-4 border-violet-500">
           <div className="flex items-center space-x-3 mb-2">
             <div className="h-10 w-10 bg-violet-500 rounded-lg flex items-center justify-center">
               <Percent className="h-5 w-5 text-white" />
@@ -411,7 +456,7 @@ export default function CalculatorSection({
           </div>
           <div className="text-3xl font-bold text-violet-700">{Number((calcResults.roi ?? 0).toFixed(2))}%</div>
         </Card>
-        <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden flex flex-col items-center justify-center p-6">
+        <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden flex flex-col items-center justify-center p-6 max-w-xs w-56 mx-auto border-t-4 border-purple-500">
           <div className="flex items-center space-x-3 mb-2">
             <div className="h-10 w-10 bg-purple-500 rounded-lg flex items-center justify-center">
               <TrendingUp className="h-5 w-5 text-white" />
@@ -455,189 +500,490 @@ export default function CalculatorSection({
 
       {(calcResults.roi !== null) && (
         <div className="space-y-6 animate-fade-in">
-          {/* Header del Dashboard */}
+          {/* Header del Dashboard con Toggle */}
           <Card className="bg-gradient-to-r from-blue-500 to-purple-600 border-0 shadow-lg rounded-xl overflow-hidden">
-            <CardContent className="p-6 text-center text-white">
-              <h2 className="text-2xl font-bold mb-2">🎯 Mapa de Rentabilidad Completo</h2>
-              <p className="text-blue-100">Análisis integral de tu campaña COD</p>
+            <CardContent className="p-6">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 text-white">
+                <div className="text-center flex-1">
+                  <h2 className="text-2xl font-bold mb-2">
+                    {showHeatmap ? '🔥 Heatmap de Profitabilidad' : '🎯 Mapa de Rentabilidad Completo'}
+                  </h2>
+                  <p className="text-blue-100">
+                    {showHeatmap 
+                      ? 'Explora escenarios de rentabilidad variando CPA y Tasa de Conversión'
+                      : 'Análisis integral de tu campaña COD'
+                    }
+                  </p>
+                </div>
+                {/* Botón Toggle */}
+                <div className="flex items-center justify-center md:justify-end space-x-3">
+                  <Button
+                    onClick={() => setShowHeatmap(!showHeatmap)}
+                    variant="outline"
+                    className="bg-white/20 border-white/30 text-white hover:bg-white/30 transition-all duration-300 px-2 py-1 text-xs md:px-4 md:py-2 md:text-base"
+                  >
+                    {showHeatmap ? (
+                      <>
+                        <TrendingUp className="h-4 w-4 mr-2" />
+                        <span className="hidden sm:inline">Ver Mapa Normal</span>
+                        <span className="inline sm:hidden">Normal</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="mr-1">🔥</span>
+                        <span className="hidden sm:inline">Ver Heatmap</span>
+                        <span className="inline sm:hidden">Heatmap</span>
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
             </CardContent>
           </Card>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Gráfico de Distribución de Costos */}
-            <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
-              <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 pb-4">
-                <CardTitle className="text-blue-900 font-semibold flex items-center">
-                  <div className="h-8 w-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3">🍩</div>
-                  Distribución de Costos
-                </CardTitle>
-                <CardDescription className="text-blue-700">¿Dónde se va tu inversión?</CardDescription>
-              </CardHeader>
-              <CardContent className="p-6">
-                <ReactApexChart
-                  options={{
-                    chart: { type: 'donut', toolbar: { show: false } },
-                    labels: ['Inversión Publicitaria', 'Costos de Producto', 'Gastos Operativos', 'Comisión Courier'],
-                    colors: ['#3b82f6', '#ef4444', '#f59e0b', '#8b5cf6'],
-                    dataLabels: {
-                      enabled: true,
-                      formatter: function (val, opts) {
-                        return getCurrencySymbol() + ' ' + Number(val).toFixed(0);
+          {/* Contenido Condicional */}
+          {showHeatmap ? (
+            <div className="space-y-6">
+              {/* Configuración del Heatmap */}
+              <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-orange-50 to-red-100 pb-4">
+                  <CardTitle className="text-orange-900 font-semibold flex items-center">
+                    <div className="h-8 w-8 bg-orange-500 rounded-lg flex items-center justify-center mr-3">
+                      ⚙️
+                    </div>
+                    Configuración del Análisis
+                  </CardTitle>
+                  <CardDescription className="text-orange-700">
+                    El heatmap variará CPA (20-100) y Tasa de Conversión (10%-50%) basado en tus otros datos
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div className="p-4 bg-blue-50 rounded-lg">
+                      <div className="text-lg font-semibold text-blue-700">Precio Producto</div>
+                      <div className="text-2xl font-bold text-blue-900">{getCurrencySymbol()} {inputValues.precioProducto || 0}</div>
+                    </div>
+                    <div className="p-4 bg-green-50 rounded-lg">
+                      <div className="text-lg font-semibold text-green-700">Costo Total/Pedido</div>
+                      <div className="text-2xl font-bold text-green-900">
+                        {getCurrencySymbol()} {(
+                          (Number(inputValues.costoProducto) || 0) + 
+                          (Number(inputValues.gastoOperativo) || 0) + 
+                          (Number(inputValues.comisionCourier) || 0)
+                        ).toFixed(0)}
+                      </div>
+                    </div>
+                    <div className="p-4 bg-purple-50 rounded-lg">
+                      <div className="text-lg font-semibold text-purple-700">Tasa de Entrega</div>
+                      <div className="text-2xl font-bold text-purple-900">{inputValues.tasaEntrega || 0}%</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Heatmap Principal */}
+              <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-red-50 to-orange-100 pb-4">
+                  <CardTitle className="text-red-900 font-semibold flex items-center">
+                    <div className="h-8 w-8 bg-red-500 rounded-lg flex items-center justify-center mr-3">
+                      🔥
+                    </div>
+                    Mapa de Calor: ROI por CPA vs Tasa de Conversión
+                  </CardTitle>
+                  <CardDescription className="text-red-700">
+                    Verde = Rentable | Amarillo = Marginal | Rojo = Pérdidas
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <ReactApexChart
+                    options={{
+                      chart: {
+                        type: 'heatmap',
+                        toolbar: { show: false },
+                        height: 500
                       },
-                    },
-                    plotOptions: {
-                      pie: {
-                        donut: {
-                          size: '60%',
-                          labels: {
-                            show: true,
-                            total: {
+                      dataLabels: {
+                        enabled: true,
+                        style: {
+                          colors: ['#1e293b'],
+                          fontSize: '11px',
+                          fontWeight: 600
+                        },
+                        formatter: function(val) {
+                          return Number(val) > 0 ? '+' + Number(val).toFixed(0) + '%' : Number(val).toFixed(0) + '%';
+                        }
+                      },
+                      colors: ["#ef4444"],
+                      plotOptions: {
+                        heatmap: {
+                          shadeIntensity: 0.5,
+                          radius: 8,
+                          useFillColorAsStroke: false,
+                          colorScale: {
+                            ranges: [
+                              { from: -100, to: -0.1, color: '#dc2626', name: 'Pérdidas' },
+                              { from: 0, to: 19.9, color: '#f59e0b', name: 'Marginal' },
+                              { from: 20, to: 49.9, color: '#eab308', name: 'Bueno' },
+                              { from: 50, to: 99.9, color: '#22c55e', name: 'Muy Bueno' },
+                              { from: 100, to: 500, color: '#16a34a', name: 'Excelente' }
+                            ]
+                          }
+                        }
+                      },
+                      xaxis: {
+                        title: { text: 'CPA (' + getCurrencySymbol() + ')' },
+                        labels: {
+                          style: { fontSize: '12px', fontWeight: 600 }
+                        }
+                      },
+                      yaxis: {
+                        title: { text: 'Tasa de Conversión (%)' },
+                        labels: {
+                          style: { fontSize: '12px', fontWeight: 600 }
+                        }
+                      },
+                      tooltip: {
+                        y: {
+                          formatter: function(val) {
+                            return 'ROI: ' + Number(val).toFixed(1) + '%';
+                          }
+                        }
+                      },
+                      title: {
+                        text: 'Análisis de Rentabilidad - Variación de CPA vs Tasa de Conversión',
+                        align: 'center',
+                        style: {
+                          fontSize: '16px',
+                          fontWeight: 600,
+                          color: '#374151'
+                        }
+                      }
+                    }}
+                    series={heatmapData}
+                    type="heatmap"
+                    height={500}
+                  />
+                </CardContent>
+              </Card>
+
+              {/* Análisis del Heatmap */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
+                  <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-100 pb-4">
+                    <CardTitle className="text-green-900 font-semibold flex items-center">
+                      <div className="h-8 w-8 bg-green-500 rounded-lg flex items-center justify-center mr-3">
+                        ✅
+                      </div>
+                      Zonas Rentables
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      <div className="p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                        <h4 className="font-semibold text-green-800 mb-2">🎯 Zona Óptima</h4>
+                        <p className="text-green-700 text-sm">
+                          CPA &lt; {getCurrencySymbol()} 40 + Conversión &gt; 25% = ROI excelente (&gt;50%)
+                        </p>
+                      </div>
+                      <div className="p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                        <h4 className="font-semibold text-yellow-800 mb-2">⚠️ Zona Marginal</h4>
+                        <p className="text-yellow-700 text-sm">
+                          CPA {getCurrencySymbol()} 40-60 + Conversión 20-30% = ROI moderado (0-20%)
+                        </p>
+                      </div>
+                      <div className="p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                        <h4 className="font-semibold text-red-800 mb-2">❌ Zona de Pérdidas</h4>
+                        <p className="text-red-700 text-sm">
+                          CPA &gt; {getCurrencySymbol()} 70 + Conversión &lt; 20% = ROI negativo
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
+                  <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-100 pb-4">
+                    <CardTitle className="text-blue-900 font-semibold flex items-center">
+                      <div className="h-8 w-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                        💡
+                      </div>
+                      Recomendaciones Estratégicas
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      <div className="p-4 bg-blue-50 rounded-lg">
+                        <h4 className="font-semibold text-blue-800 mb-2">🚀 Para Escalar</h4>
+                        <p className="text-blue-700 text-sm">
+                          Mantén CPA &lt; {getCurrencySymbol()} {Math.round(((Number(inputValues.precioProducto) || 200) - ((Number(inputValues.costoProducto) || 80) + (Number(inputValues.gastoOperativo) || 20) + (Number(inputValues.comisionCourier) || 15))) * 0.6)} y optimiza conversión al 30%+
+                        </p>
+                      </div>
+                      <div className="p-4 bg-purple-50 rounded-lg">
+                        <h4 className="font-semibold text-purple-800 mb-2">🎯 Para Optimizar</h4>
+                        <p className="text-purple-700 text-sm">
+                          Si tu CPA actual es alto, enfócate primero en mejorar la tasa de conversión antes de reducir CPA
+                        </p>
+                      </div>
+                      <div className="p-4 bg-orange-50 rounded-lg">
+                        <h4 className="font-semibold text-orange-800 mb-2">⚡ Acción Inmediata</h4>
+                        <p className="text-orange-700 text-sm">
+                          Tu posición actual: CPA {getCurrencySymbol()}{inputValues.cpa || 0}, Conversión {inputValues.tasaCierre || 0}% 
+                          {(() => {
+                            const currentCPA = Number(inputValues.cpa) || 0;
+                            const currentConv = Number(inputValues.tasaCierre) || 0;
+                            if (currentCPA < 40 && currentConv > 25) return "🟢 ¡Estás en zona rentable!";
+                            if (currentCPA > 70 || currentConv < 15) return "🔴 Necesitas optimizar urgente";
+                            return "🟡 Puedes mejorar";
+                          })()}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Tabla de Escenarios Específicos */}
+              <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 pb-4">
+                  <CardTitle className="text-gray-900 font-semibold flex items-center">
+                    <div className="h-8 w-8 bg-gray-500 rounded-lg flex items-center justify-center mr-3">
+                      📊
+                    </div>
+                    Escenarios de Optimización
+                  </CardTitle>
+                  <CardDescription className="text-gray-700">
+                    Proyecciones basadas en tus datos actuales
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b-2 border-gray-200">
+                          <th className="text-left p-3 font-semibold">Escenario</th>
+                          <th className="text-center p-3 font-semibold">CPA</th>
+                          <th className="text-center p-3 font-semibold">Conversión</th>
+                          <th className="text-center p-3 font-semibold">Entregas</th>
+                          <th className="text-center p-3 font-semibold">ROI</th>
+                          <th className="text-center p-3 font-semibold">Ganancia</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {(() => {
+                          const scenarios = [
+                            { name: "😫 Actual", cpa: Number(inputValues.cpa) || 45, conv: Number(inputValues.tasaCierre) || 15 },
+                            { name: "🎯 Optimizado", cpa: 35, conv: 25 },
+                            { name: "🚀 Excelente", cpa: 25, conv: 35 },
+                            { name: "💎 Ideal", cpa: 20, conv: 40 }
+                          ];
+                          return scenarios.map((scenario, index) => {
+                            const investment = Number(inputValues.inversionPublicitaria) || 2000;
+                            const leads = investment / scenario.cpa;
+                            const conversions = leads * (scenario.conv / 100);
+                            const deliveries = conversions * ((Number(inputValues.tasaEntrega) || 85) / 100);
+                            const revenue = deliveries * (Number(inputValues.precioProducto) || 200);
+                            const costPerOrder = (Number(inputValues.costoProducto) || 80) + (Number(inputValues.gastoOperativo) || 20) + (Number(inputValues.comisionCourier) || 15);
+                            const variableCosts = deliveries * costPerOrder;
+                            const profit = revenue - variableCosts - investment;
+                            const roi = (profit / investment) * 100;
+                            return (
+                              <tr key={index} className={`border-b border-gray-100 ${index === 0 ? 'bg-blue-50' : ''}`}>
+                                <td className="p-3 font-medium">{scenario.name}</td>
+                                <td className="p-3 text-center">{getCurrencySymbol()}{scenario.cpa}</td>
+                                <td className="p-3 text-center">{scenario.conv}%</td>
+                                <td className="p-3 text-center">{deliveries.toFixed(1)}</td>
+                                <td className={`p-3 text-center font-bold ${roi >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                  {roi.toFixed(1)}%
+                                </td>
+                                <td className={`p-3 text-center font-bold ${profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                  {getCurrencySymbol()}{profit.toFixed(0)}
+                                </td>
+                              </tr>
+                            );
+                          });
+                        })()}
+                      </tbody>
+                    </table>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Gráfico de Distribución de Costos */}
+              <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 pb-4">
+                  <CardTitle className="text-blue-900 font-semibold flex items-center">
+                    <div className="h-8 w-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3">🍩</div>
+                    Distribución de Costos
+                  </CardTitle>
+                  <CardDescription className="text-blue-700">¿Dónde se va tu inversión?</CardDescription>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <ReactApexChart
+                    options={{
+                      chart: { type: 'donut', toolbar: { show: false } },
+                      labels: ['Inversión Publicitaria', 'Costos de Producto', 'Gastos Operativos', 'Comisión Courier'],
+                      colors: ['#3b82f6', '#ef4444', '#f59e0b', '#8b5cf6'],
+                      dataLabels: {
+                        enabled: true,
+                        formatter: function (val, opts) {
+                          return getCurrencySymbol() + ' ' + Number(val).toFixed(0);
+                        },
+                      },
+                      plotOptions: {
+                        pie: {
+                          donut: {
+                            size: '60%',
+                            labels: {
                               show: true,
-                              label: 'Total',
-                              formatter: () => getCurrencySymbol() + ' ' + (
-                                Number(inputValues.inversionPublicitaria || 0) +
-                                Number(inputValues.costoProducto || 0) * Number(derived.entregas || 0) +
-                                Number(inputValues.gastoOperativo || 0) * Number(derived.entregas || 0) +
-                                Number(inputValues.comisionCourier || 0) * Number(derived.entregas || 0)
-                              ).toFixed(0)
+                              total: {
+                                show: true,
+                                label: 'Total',
+                                formatter: () => getCurrencySymbol() + ' ' + (
+                                  Number(inputValues.inversionPublicitaria || 0) +
+                                  Number(inputValues.costoProducto || 0) * Number(derived.entregas || 0) +
+                                  Number(inputValues.gastoOperativo || 0) * Number(derived.entregas || 0) +
+                                  Number(inputValues.comisionCourier || 0) * Number(derived.entregas || 0)
+                                ).toFixed(0)
+                              }
                             }
                           }
                         }
-                      }
-                    },
-                    legend: { position: 'bottom', horizontalAlign: 'center' },
-                    tooltip: {
-                      y: { formatter: (val) => getCurrencySymbol() + ' ' + Number(val).toFixed(2) },
-                    },
-                  }}
-                  series={[
-                    Number(inputValues.inversionPublicitaria) || 0,
-                    ((Number(inputValues.costoProducto) || 0) * (derived.entregas || 0)),
-                    ((Number(inputValues.gastoOperativo) || 0) * (derived.entregas || 0)),
-                    ((Number(inputValues.comisionCourier) || 0) * (derived.entregas || 0))
-                  ]}
-                  type="donut"
-                  height={300}
-                />
-              </CardContent>
-            </Card>
-            {/* Gráfico del Funnel */}
-            <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
-              <CardHeader className="bg-gradient-to-r from-green-50 to-green-100 pb-4">
-                <CardTitle className="text-green-900 font-semibold flex items-center">
-                  <div className="h-8 w-8 bg-green-500 rounded-lg flex items-center justify-center mr-3">📊</div>
-                  Funnel de Conversión
-                </CardTitle>
-                <CardDescription className="text-green-700">De leads a entregas exitosas</CardDescription>
-              </CardHeader>
-              <CardContent className="p-6">
-                <ReactApexChart
-                  options={{
-                    chart: { type: 'bar', toolbar: { show: false } },
-                    plotOptions: { bar: { horizontal: false, borderRadius: 8, dataLabels: { position: 'top' } } },
-                    dataLabels: {
-                      enabled: true,
-                      formatter: function (val) { return val.toFixed(1); },
-                      offsetY: -20,
-                      style: { fontSize: '12px', colors: ["#304758"] }
-                    },
-                    xaxis: {
-                      categories: ['Leads', 'Conversiones', 'Entregas'],
-                      labels: { style: { colors: ['#059669', '#059669', '#059669'], fontSize: '14px', fontWeight: 600 } }
-                    },
-                    yaxis: { title: { text: 'Cantidad' } },
-                    colors: ['#10b981'],
-                    grid: { borderColor: '#e5e7eb' },
-                    tooltip: { y: { formatter: (val) => val.toFixed(1) + ' unidades' } },
-                  }}
-                  series={[
-                    { name: 'Cantidad', data: [derived.leads || 0, derived.conversiones || 0, derived.entregas || 0] },
-                  ]}
-                  type="bar"
-                  height={300}
-                />
-              </CardContent>
-            </Card>
-            {/* Gráfico de Rentabilidad */}
-            <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
-              <CardHeader className="bg-gradient-to-r from-purple-50 to-purple-100 pb-4">
-                <CardTitle className="text-purple-900 font-semibold flex items-center">
-                  <div className="h-8 w-8 bg-purple-500 rounded-lg flex items-center justify-center mr-3">💰</div>
-                  Análisis Financiero
-                </CardTitle>
-                <CardDescription className="text-purple-700">Ingresos vs Costos vs Ganancia</CardDescription>
-              </CardHeader>
-              <CardContent className="p-6">
-                <ReactApexChart
-                  options={{
-                    chart: { type: 'bar', toolbar: { show: false } },
-                    plotOptions: { bar: { horizontal: false, borderRadius: 8, dataLabels: { position: 'top' } } },
-                    dataLabels: {
-                      enabled: true,
-                      formatter: function (val) { return getCurrencySymbol() + ' ' + Number(val).toFixed(0); },
-                      offsetY: -20,
-                      style: { fontSize: '12px', colors: ["#304758"] }
-                    },
-                    xaxis: {
-                      categories: ['Ingresos', 'Costos', 'Ganancia/Pérdida'],
-                      labels: { style: { fontSize: '14px', fontWeight: 600 } }
-                    },
-                    yaxis: { title: { text: `Monto (${getCurrencySymbol()})` } },
-                    colors: [
-                      '#10b981', // Ingresos
-                      '#ef4444', // Costos
-                      (Number(derived.ganancia) >= 0 ? '#10b981' : '#ef4444') // Ganancia/Pérdida
-                    ],
-                    grid: { borderColor: '#e5e7eb' },
-                    tooltip: { y: { formatter: (val) => getCurrencySymbol() + ' ' + Number(val).toFixed(2) } },
-                  }}
-                  series={[
-                    { name: 'Monto', data: [derived.ingresosTotales || 0, derived.costosTotal || 0, Math.abs(derived.ganancia || 0)] },
-                  ]}
-                  type="bar"
-                  height={300}
-                />
-              </CardContent>
-            </Card>
-            {/* Gráfico Radar de Métricas */}
-            <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
-              <CardHeader className="bg-gradient-to-r from-indigo-50 to-indigo-100 pb-4">
-                <CardTitle className="text-indigo-900 font-semibold flex items-center">
-                  <div className="h-8 w-8 bg-indigo-500 rounded-lg flex items-center justify-center mr-3">🎯</div>
-                  Radar de Performance
-                </CardTitle>
-                <CardDescription className="text-indigo-700">Visualización integral de métricas</CardDescription>
-              </CardHeader>
-              <CardContent className="p-6">
-                <ReactApexChart
-                  options={{
-                    chart: { type: 'radar', toolbar: { show: false } },
-                    xaxis: {
-                      categories: ['CPA Score', 'Tasa Cierre', 'Tasa Entrega', 'Margen Producto', 'ROAS Score'],
-                      labels: { style: { colors: ['#6366f1', '#6366f1', '#6366f1', '#6366f1', '#6366f1'], fontSize: '12px' } }
-                    },
-                    yaxis: { max: 100, tickAmount: 5 },
-                    plotOptions: { radar: { polygons: { strokeColors: '#e5e7eb', fill: { colors: ['#f8fafc', '#f1f5f9'] } } } },
-                    colors: [calcResults.roi >= 0 ? '#10b981' : '#ef4444'],
-                    markers: { size: 4, strokeWidth: 2, fillOpacity: 1 },
-                    fill: { opacity: 0.1 },
-                    stroke: { width: 2 }
-                  }}
-                  series={[
-                    { name: 'Performance', data: [
-                      Math.max(0, 100 - ((Number(inputValues.cpa) || 50) / 100 * 100)),
-                      Number(inputValues.tasaCierre) || 0,
-                      Number(inputValues.tasaEntrega) || 0,
-                      (Number(inputValues.precioProducto) && Number(inputValues.costoProducto)) ? ((Number(inputValues.precioProducto) - Number(inputValues.costoProducto)) / Number(inputValues.precioProducto)) * 100 : 0,
-                      calcResults && calcResults.roas ? Math.min(calcResults.roas * 25, 100) : 0
-                    ] },
-                  ]}
-                  type="radar"
-                  height={300}
-                />
-              </CardContent>
-            </Card>
-          </div>
-          {/* Insights y tabla de break-even analysis igual que en tu ejemplo... */}
+                      },
+                      legend: { position: 'bottom', horizontalAlign: 'center' },
+                      tooltip: {
+                        y: { formatter: (val) => getCurrencySymbol() + ' ' + Number(val).toFixed(2) },
+                      },
+                    }}
+                    series={[
+                      Number(inputValues.inversionPublicitaria) || 0,
+                      ((Number(inputValues.costoProducto) || 0) * (derived.entregas || 0)),
+                      ((Number(inputValues.gastoOperativo) || 0) * (derived.entregas || 0)),
+                      ((Number(inputValues.comisionCourier) || 0) * (derived.entregas || 0))
+                    ]}
+                    type="donut"
+                    height={300}
+                  />
+                </CardContent>
+              </Card>
+              {/* Gráfico del Funnel */}
+              <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-green-50 to-green-100 pb-4">
+                  <CardTitle className="text-green-900 font-semibold flex items-center">
+                    <div className="h-8 w-8 bg-green-500 rounded-lg flex items-center justify-center mr-3">📊</div>
+                    Funnel de Conversión
+                  </CardTitle>
+                  <CardDescription className="text-green-700">De leads a entregas exitosas</CardDescription>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <ReactApexChart
+                    options={{
+                      chart: { type: 'bar', toolbar: { show: false } },
+                      plotOptions: { bar: { horizontal: false, borderRadius: 8, dataLabels: { position: 'top' } } },
+                      dataLabels: {
+                        enabled: true,
+                        formatter: function (val) { return Number(val).toFixed(1); },
+                        offsetY: -20,
+                        style: { fontSize: '12px', colors: ["#304758"] }
+                      },
+                      xaxis: {
+                        categories: ['Leads', 'Conversiones', 'Entregas'],
+                        labels: { style: { colors: ['#059669', '#059669', '#059669'], fontSize: '14px', fontWeight: 600 } }
+                      },
+                      yaxis: { title: { text: 'Cantidad' } },
+                      colors: ['#10b981'],
+                      grid: { borderColor: '#e5e7eb' },
+                      tooltip: { y: { formatter: (val) => Number(val).toFixed(1) + ' unidades' } },
+                    }}
+                    series={[
+                      { name: 'Cantidad', data: [derived.leads || 0, derived.conversiones || 0, derived.entregas || 0] },
+                    ]}
+                    type="bar"
+                    height={300}
+                  />
+                </CardContent>
+              </Card>
+              {/* Gráfico de Rentabilidad */}
+              <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-purple-50 to-purple-100 pb-4">
+                  <CardTitle className="text-purple-900 font-semibold flex items-center">
+                    <div className="h-8 w-8 bg-purple-500 rounded-lg flex items-center justify-center mr-3">💰</div>
+                    Análisis Financiero
+                  </CardTitle>
+                  <CardDescription className="text-purple-700">Ingresos vs Costos vs Ganancia</CardDescription>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <ReactApexChart
+                    options={{
+                      chart: { type: 'bar', toolbar: { show: false } },
+                      plotOptions: { bar: { horizontal: false, borderRadius: 8, dataLabels: { position: 'top' } } },
+                      dataLabels: {
+                        enabled: true,
+                        formatter: function (val) { return getCurrencySymbol() + ' ' + Number(val).toFixed(0); },
+                        offsetY: -20,
+                        style: { fontSize: '12px', colors: ["#304758"] }
+                      },
+                      xaxis: {
+                        categories: ['Ingresos', 'Costos', 'Ganancia/Pérdida'],
+                        labels: { style: { fontSize: '14px', fontWeight: 600 } }
+                      },
+                      yaxis: { title: { text: `Monto (${getCurrencySymbol()})` } },
+                      colors: [
+                        '#10b981', // Ingresos
+                        '#ef4444', // Costos
+                        (Number(derived.ganancia) >= 0 ? '#10b981' : '#ef4444') // Ganancia/Pérdida
+                      ],
+                      grid: { borderColor: '#e5e7eb' },
+                      tooltip: { y: { formatter: (val) => getCurrencySymbol() + ' ' + Number(val).toFixed(2) } },
+                    }}
+                    series={[
+                      { name: 'Monto', data: [derived.ingresosTotales || 0, derived.costosTotal || 0, Math.abs(derived.ganancia || 0)] },
+                    ]}
+                    type="bar"
+                    height={300}
+                  />
+                </CardContent>
+              </Card>
+              {/* Gráfico Radar de Métricas */}
+              <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-indigo-50 to-indigo-100 pb-4">
+                  <CardTitle className="text-indigo-900 font-semibold flex items-center">
+                    <div className="h-8 w-8 bg-indigo-500 rounded-lg flex items-center justify-center mr-3">🎯</div>
+                    Radar de Performance
+                  </CardTitle>
+                  <CardDescription className="text-indigo-700">Visualización integral de métricas</CardDescription>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <ReactApexChart
+                    options={{
+                      chart: { type: 'radar', toolbar: { show: false } },
+                      xaxis: {
+                        categories: ['CPA Score', 'Tasa Cierre', 'Tasa Entrega', 'Margen Producto', 'ROAS Score'],
+                        labels: { style: { colors: ['#6366f1', '#6366f1', '#6366f1', '#6366f1', '#6366f1'], fontSize: '12px' } }
+                      },
+                      yaxis: { max: 100, tickAmount: 5 },
+                      plotOptions: { radar: { polygons: { strokeColors: '#e5e7eb', fill: { colors: ['#f8fafc', '#f1f5f9'] } } } },
+                      colors: [calcResults.roi >= 0 ? '#10b981' : '#ef4444'],
+                      markers: { size: 4, strokeWidth: 2, fillOpacity: 1 },
+                      fill: { opacity: 0.1 },
+                      stroke: { width: 2 }
+                    }}
+                    series={[
+                      { name: 'Performance', data: [
+                        Math.max(0, 100 - ((Number(inputValues.cpa) || 50) / 100 * 100)),
+                        Number(inputValues.tasaCierre) || 0,
+                        Number(inputValues.tasaEntrega) || 0,
+                        (Number(inputValues.precioProducto) && Number(inputValues.costoProducto)) ? ((Number(inputValues.precioProducto) - Number(inputValues.costoProducto)) / Number(inputValues.precioProducto)) * 100 : 0,
+                        calcResults && calcResults.roas ? Math.min(calcResults.roas * 25, 100) : 0
+                      ] },
+                    ]}
+                    type="radar"
+                    height={300}
+                  />
+                </CardContent>
+              </Card>
+            </div>
+          )}
         </div>
       )}
 
@@ -700,7 +1046,7 @@ export default function CalculatorSection({
 }
 
 function calculateDerivedMetrics(calcResults: any, inputValues: any) {
-  if (!calcResults || !calcResults.roi) return {};
+  if (!calcResults || calcResults.roi === null || calcResults.roi === undefined) return {};
   const leads = (Number(inputValues.inversionPublicitaria) || 0) / (Number(inputValues.cpa) || 1);
   const conversiones = leads * ((Number(inputValues.tasaCierre) || 0) / 100);
   const entregas = conversiones * ((Number(inputValues.tasaEntrega) || 0) / 100);

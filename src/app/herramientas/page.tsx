@@ -100,24 +100,18 @@ export default function HerramientasPage() {
   });
 
   // Estado para cambio de moneda
-  const [isDollarMode, setIsDollarMode] = useState(false)
-  const [dollarRate, setDollarRate] = useState("3.75")
-
-  // Función para convertir moneda
-  const convertCurrency = (value: number, toDollar: boolean = isDollarMode) => {
-    const rate = parseFloat(dollarRate) || 3.75
-    return toDollar ? value / rate : value * rate
-  }
+  const [currency, setCurrency] = useState("PEN");
 
   // Función para obtener el símbolo de moneda
-  const getCurrencySymbol = () => isDollarMode ? "$" : "S/"
-
-  // Efecto para recalcular cuando cambie la moneda
-  useEffect(() => {
-    if (calcResults.cpaReal !== null) {
-      calculateResults();
+  const getCurrencySymbol = () => {
+    switch (currency) {
+      case "USD": return "$";
+      case "PEN": return "S/";
+      case "MXN": return "$MXN";
+      case "COL": return "$COL";
+      default: return "$";
     }
-  }, [isDollarMode, dollarRate]);
+  };
 
   // Función para manejar cambios en los inputs - CORREGIDA
   const handleInputChange = (field: string, value: string, tab: string = "") => {
@@ -241,18 +235,14 @@ export default function HerramientasPage() {
       let roi = 0;
       let margenNeto = 0;
 
-      // Convertir valores de entrada si están en dólares
-      const rate = parseFloat(dollarRate) || 3.75;
-      const convertToSoles = (value: number) => isDollarMode ? value * rate : value;
-
+      // Por ahora, los cálculos se hacen en la moneda seleccionada
       if (activeCalcTab === "conversiones") {
-        // Cálculos para conversiones
-        const inversionPublicitaria = convertToSoles(conversionData.inversionPublicitaria);
-        const cpa = convertToSoles(conversionData.cpa);
-        const precioProducto = convertToSoles(sharedData.precioProducto);
-        const costoProducto = convertToSoles(sharedData.costoProducto);
-        const gastoOperativo = convertToSoles(sharedData.gastoOperativo);
-        const comisionCourier = convertToSoles(sharedData.comisionCourier);
+        const inversionPublicitaria = conversionData.inversionPublicitaria;
+        const cpa = conversionData.cpa;
+        const precioProducto = sharedData.precioProducto;
+        const costoProducto = sharedData.costoProducto;
+        const gastoOperativo = sharedData.gastoOperativo;
+        const comisionCourier = sharedData.comisionCourier;
 
         const conversiones = inversionPublicitaria / cpa;
         const conversionesExitosas = conversiones * (conversionData.tasaCierre / 100);
@@ -268,13 +258,12 @@ export default function HerramientasPage() {
         roi = ((ingresos - costosTotales) / costosTotales) * 100;
         margenNeto = ((ingresos - costosTotales) / ingresos) * 100;
       } else {
-        // Cálculos para WhatsApp
-        const inversionPublicitaria = convertToSoles(whatsappData.inversionPublicitaria);
-        const costoPorMensaje = convertToSoles(whatsappData.costoPorMensaje);
-        const precioProducto = convertToSoles(sharedData.precioProducto);
-        const costoProducto = convertToSoles(sharedData.costoProducto);
-        const gastoOperativo = convertToSoles(sharedData.gastoOperativo);
-        const comisionCourier = convertToSoles(sharedData.comisionCourier);
+        const inversionPublicitaria = whatsappData.inversionPublicitaria;
+        const costoPorMensaje = whatsappData.costoPorMensaje;
+        const precioProducto = sharedData.precioProducto;
+        const costoProducto = sharedData.costoProducto;
+        const gastoOperativo = sharedData.gastoOperativo;
+        const comisionCourier = sharedData.comisionCourier;
 
         const mensajes = inversionPublicitaria / costoPorMensaje;
         const conversiones = mensajes * (whatsappData.tasaConversionWhatsApp / 100);
@@ -289,11 +278,6 @@ export default function HerramientasPage() {
         roas = ingresos / inversionPublicitaria;
         roi = ((ingresos - costosTotales) / costosTotales) * 100;
         margenNeto = ((ingresos - costosTotales) / ingresos) * 100;
-      }
-
-      // Convertir resultados a la moneda seleccionada si es necesario
-      if (isDollarMode) {
-        cpaReal = cpaReal / rate;
       }
 
       setCalcResults({
@@ -836,11 +820,8 @@ export default function HerramientasPage() {
               clearAllData={clearAllData}
               calculateResults={calculateResults}
               handleTabChange={handleTabChange}
-              isDollarMode={isDollarMode}
-              setIsDollarMode={setIsDollarMode}
-              dollarRate={dollarRate}
-              setDollarRate={setDollarRate}
-              convertCurrency={convertCurrency}
+              currency={currency}
+              setCurrency={setCurrency}
               getCurrencySymbol={getCurrencySymbol}
             />
           )}
