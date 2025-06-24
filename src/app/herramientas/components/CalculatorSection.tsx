@@ -9,6 +9,16 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@
 import { useState, useMemo } from 'react';
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
+// Helper para color de celda en la tabla dinámica 7x7
+function getColorClass(roi: number): string {
+  if (roi > 50) return 'bg-emerald-600 text-white';
+  if (roi >= 25) return 'bg-emerald-400 text-white';
+  if (roi >= 10) return 'bg-yellow-400 text-gray-800';
+  if (roi >= 0) return 'bg-pink-300 text-gray-800';
+  if (roi >= -20) return 'bg-red-400 text-white';
+  return 'bg-red-700 text-white';
+}
+
 export default function CalculatorSection({
   activeCalcTab,
   setActiveCalcTab,
@@ -76,6 +86,10 @@ export default function CalculatorSection({
       calculateResults();
     }
   };
+
+  // Valores representativos para la tabla 7x7
+  const cpaValues7 = [15, 20, 25, 30, 40, 60, 80];
+  const ganancias7 = [20, 40, 60, 80, 100, 120, 140];
 
   return (
     <div className="space-y-6">
@@ -575,7 +589,7 @@ export default function CalculatorSection({
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 text-sm">
                     <div className="flex items-center space-x-2">
                       <div className="w-4 h-4 bg-emerald-600 rounded"></div>
-                      <span className="text-gray-700"><strong>ROI &gt; 50%</strong><br/>Excelente rentabilidad</span>
+                      <span className="text-gray-700"><strong>ROI {'>'} 50%</strong><br/>Excelente rentabilidad</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <div className="w-4 h-4 bg-emerald-400 rounded"></div>
@@ -595,12 +609,12 @@ export default function CalculatorSection({
                     </div>
                     <div className="flex items-center space-x-2">
                       <div className="w-4 h-4 bg-red-700 rounded"></div>
-                      <span className="text-gray-700"><strong>ROI &lt; -20%</strong><br/>Pérdida significativa</span>
+                      <span className="text-gray-700"><strong>ROI {'<'} -20%</strong><br/>Pérdida significativa</span>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-              {/* Tabla Dinámica Principal */}
+              {/* Tabla Dinámica Principal 7x7 */}
               <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
                 <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-100 pb-4">
                   <CardTitle className="text-purple-900 font-semibold flex items-center">
@@ -619,71 +633,55 @@ export default function CalculatorSection({
                       <thead>
                         <tr>
                           <th className="border border-gray-300 p-2 bg-gray-100 font-semibold">CPA ({getCurrencySymbol()})</th>
-                          {(() => {
-                            const ganancias = [42, 56, 70, 84, 98];
-                            return ganancias.map(ganancia => (
-                              <th key={ganancia} className="border border-gray-300 p-2 bg-blue-100 font-semibold text-center">
-                                Ganancia {getCurrencySymbol()}/ {ganancia}
-                                <br/>
-                                <span className="text-xs text-gray-600">Obj. ROI: {((ganancia/20)*100).toFixed(0)}%</span>
-                              </th>
-                            ));
-                          })()}
+                          {ganancias7.map(ganancia => (
+                            <th key={ganancia} className="border border-gray-300 p-2 bg-blue-100 font-semibold text-center">
+                              Ganancia {getCurrencySymbol()}/ {ganancia}
+                              <br/>
+                              <span className="text-xs text-gray-600">Obj. ROI: {((ganancia/(Number(inputValues.inversionPublicitaria)||1000))*100).toFixed(0)}%</span>
+                            </th>
+                          ))}
                         </tr>
                       </thead>
                       <tbody>
-                        {(() => {
-                          const cpaValues = [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
-                          const ganancias = [42, 56, 70, 84, 98];
-                          // Datos base de la calculadora
-                          const investment = Number(inputValues.inversionPublicitaria) || 2000;
-                          const productPrice = Number(inputValues.precioProducto) || 200;
-                          const productCost = Number(inputValues.costoProducto) || 80;
-                          const operativeCost = Number(inputValues.gastoOperativo) || 20;
-                          const courierCost = Number(inputValues.comisionCourier) || 15;
-                          const deliveryRate = (Number(inputValues.tasaEntrega) || 85) / 100;
-                          const costPerOrder = productCost + operativeCost + courierCost;
-                          const getColorClass = (roi: number): string => {
-                            if (roi > 50) return 'bg-emerald-600 text-white';
-                            if (roi >= 25) return 'bg-emerald-400 text-white';
-                            if (roi >= 10) return 'bg-yellow-400 text-gray-800';
-                            if (roi >= 0) return 'bg-pink-300 text-gray-800';
-                            if (roi >= -20) return 'bg-red-400 text-white';
-                            return 'bg-red-700 text-white';
-                          };
-                          return cpaValues.map(cpa => (
-                            <tr key={cpa}>
-                              <td className="border border-gray-300 p-2 bg-gray-50 font-semibold text-center">
-                                {getCurrencySymbol()}/ {cpa}
-                              </td>
-                              {ganancias.map(gananciaBuscada => {
-                                const margenUnitario = productPrice - costPerOrder;
-                                const entregasNecesarias = (gananciaBuscada + investment) / margenUnitario;
-                                const leadsNecesarios = investment / cpa;
-                                const conversionesNecesarias = entregasNecesarias / deliveryRate;
-                                const tasaConversionNecesaria = (conversionesNecesarias / leadsNecesarios) * 100;
-                                const conversionActual = Number(inputValues.tasaCierre) || 25;
-                                const conversionsReales = leadsNecesarios * (conversionActual / 100);
-                                const entregasReales = conversionsReales * deliveryRate;
-                                const ingresoReal = entregasReales * productPrice;
-                                const costosVariables = entregasReales * costPerOrder;
-                                const gananciReal = ingresoReal - costosVariables - investment;
-                                const roiReal = (gananciReal / investment) * 100;
-                                return (
-                                  <td key={gananciaBuscada} className={`border border-gray-300 p-2 text-center ${getColorClass(roiReal)}`}>
-                                    <div className="font-semibold">{getCurrencySymbol()}/ {gananciReal.toFixed(0)}</div>
-                                    <div className="text-xs">ROI: {roiReal.toFixed(0)}%</div>
-                                    {tasaConversionNecesaria <= 100 && tasaConversionNecesaria > 0 && (
-                                      <div className="text-xs opacity-80">
-                                        Req: {tasaConversionNecesaria.toFixed(0)}%
-                                      </div>
-                                    )}
-                                  </td>
-                                );
-                              })}
-                            </tr>
-                          ));
-                        })()}
+                        {cpaValues7.map(cpa => (
+                          <tr key={cpa}>
+                            <td className="border border-gray-300 p-2 bg-gray-50 font-semibold text-center">
+                              {getCurrencySymbol()}/ {cpa}
+                            </td>
+                            {ganancias7.map(gananciaBuscada => {
+                              const investment = Number(inputValues.inversionPublicitaria) || 1000;
+                              const productPrice = Number(inputValues.precioProducto) || 120;
+                              const productCost = Number(inputValues.costoProducto) || 40;
+                              const operativeCost = Number(inputValues.gastoOperativo) || 15;
+                              const courierCost = Number(inputValues.comisionCourier) || 8;
+                              const deliveryRate = (Number(inputValues.tasaEntrega) || 85) / 100;
+                              const costPerOrder = productCost + operativeCost + courierCost;
+                              const margenUnitario = productPrice - costPerOrder;
+                              const entregasNecesarias = (gananciaBuscada + investment) / margenUnitario;
+                              const leadsNecesarios = investment / cpa;
+                              const conversionesNecesarias = entregasNecesarias / deliveryRate;
+                              const tasaConversionNecesaria = (conversionesNecesarias / leadsNecesarios) * 100;
+                              const conversionActual = Number(inputValues.tasaCierre) || 30;
+                              const conversionsReales = leadsNecesarios * (conversionActual / 100);
+                              const entregasReales = conversionsReales * deliveryRate;
+                              const ingresoReal = entregasReales * productPrice;
+                              const costosVariables = entregasReales * costPerOrder;
+                              const gananciReal = ingresoReal - costosVariables - investment;
+                              const roiReal = (gananciReal / investment) * 100;
+                              return (
+                                <td key={gananciaBuscada} className={`border border-gray-300 p-2 text-center ${getColorClass(roiReal)}`}>
+                                  <div className="font-semibold">{getCurrencySymbol()}/ {gananciReal.toFixed(0)}</div>
+                                  <div className="text-xs">ROI: {roiReal.toFixed(0)}%</div>
+                                  {tasaConversionNecesaria <= 100 && tasaConversionNecesaria > 0 && (
+                                    <div className="text-xs opacity-80">
+                                      Req: {tasaConversionNecesaria.toFixed(0)}%
+                                    </div>
+                                  )}
+                                </td>
+                              );
+                            })}
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>
@@ -705,7 +703,7 @@ export default function CalculatorSection({
                       <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
                         <h4 className="font-semibold text-blue-800 mb-2">📊 Interpretación</h4>
                         <p className="text-blue-700 text-sm">
-                          Cada celda muestra la ganancia real y ROI para ese CPA con tu tasa de conversión actual ({inputValues.tasaCierre || 25}%)
+                          Cada celda muestra la ganancia real y ROI para ese CPA con tu tasa de conversión actual ({inputValues.tasaCierre || 30}%)
                         </p>
                       </div>
                       <div className="p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
@@ -737,7 +735,7 @@ export default function CalculatorSection({
                       <div className="p-4 bg-green-50 rounded-lg">
                         <h4 className="font-semibold text-green-800 mb-2">🎯 Tu Situación Actual</h4>
                         <p className="text-green-700 text-sm">
-                          CPA: {getCurrencySymbol()}{inputValues.cpa || 30} | Conversión: {inputValues.tasaCierre || 25}% | 
+                          CPA: {getCurrencySymbol()}{inputValues.cpa || 25} | Conversión: {inputValues.tasaCierre || 30}% | 
                           ROI: {calcResults.roi?.toFixed(1) || 0}%
                         </p>
                       </div>
@@ -747,8 +745,8 @@ export default function CalculatorSection({
                           {(() => {
                             const currentROI = calcResults.roi || 0;
                             if (currentROI > 30) return `¡Excelente! Mantén tu CPA actual y busca escalar la inversión.`;
-                            if (currentROI > 0) return `Rentable pero mejorable. Intenta reducir CPA a ${getCurrencySymbol()}${Math.max(20, (Number(inputValues.cpa) || 30) - 10)} o aumentar conversión al ${Math.min(50, (Number(inputValues.tasaCierre) || 25) + 10)}%.`;
-                            return `No rentable. Reduce urgentemente el CPA por debajo de ${getCurrencySymbol()}${Math.round(((Number(inputValues.precioProducto) || 200) - ((Number(inputValues.costoProducto) || 80) + (Number(inputValues.gastoOperativo) || 20) + (Number(inputValues.comisionCourier) || 15))) * 0.8)}.`;
+                            if (currentROI > 0) return `Rentable pero mejorable. Intenta reducir CPA a ${getCurrencySymbol()}${Math.max(20, (Number(inputValues.cpa) || 25) - 5)} o aumentar conversión al ${Math.min(50, (Number(inputValues.tasaCierre) || 30) + 10)}%.`;
+                            return `No rentable. Reduce urgentemente el CPA por debajo de ${getCurrencySymbol()}${Math.round(((Number(inputValues.precioProducto) || 120) - ((Number(inputValues.costoProducto) || 40) + (Number(inputValues.gastoOperativo) || 15) + (Number(inputValues.comisionCourier) || 8))) * 0.8)}.`;
                           })()}
                         </p>
                       </div>
@@ -937,7 +935,7 @@ export default function CalculatorSection({
                       <div className="p-4 bg-blue-50 rounded-lg">
                         <h4 className="font-semibold text-blue-800 mb-2">🚀 Para Escalar</h4>
                         <p className="text-blue-700 text-sm">
-                          Mantén CPA &lt; {getCurrencySymbol()} {Math.round(((Number(inputValues.precioProducto) || 200) - ((Number(inputValues.costoProducto) || 80) + (Number(inputValues.gastoOperativo) || 20) + (Number(inputValues.comisionCourier) || 15))) * 0.6)} y optimiza conversión al 30%+
+                          Mantén CPA &lt; {getCurrencySymbol()} {Math.round(((Number(inputValues.precioProducto) || 120) - ((Number(inputValues.costoProducto) || 40) + (Number(inputValues.gastoOperativo) || 15) + (Number(inputValues.comisionCourier) || 8))) * 0.6)} y optimiza conversión al 30%+
                         </p>
                       </div>
                       <div className="p-4 bg-purple-50 rounded-lg">
