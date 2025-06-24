@@ -87,16 +87,16 @@ export default function HerramientasPage() {
 
   // Estado para los valores de los inputs como string
   const [inputValues, setInputValues] = useState({
-    inversionPublicitaria: "0",
-    cpa: "0",
-    tasaCierre: "0",
-    precioProducto: "0",
-    costoProducto: "0",
-    gastoOperativo: "0",
-    tasaEntrega: "0",
-    comisionCourier: "0",
-    costoPorMensaje: "0",
-    tasaConversionWhatsApp: "0"
+    inversionPublicitaria: "1000",
+    cpa: "25",
+    tasaCierre: "30",
+    precioProducto: "120",
+    costoProducto: "40",
+    gastoOperativo: "15",
+    tasaEntrega: "85",
+    comisionCourier: "8",
+    costoPorMensaje: "10",
+    tasaConversionWhatsApp: "25"
   });
 
   // Estado para cambio de moneda
@@ -144,16 +144,16 @@ export default function HerramientasPage() {
   // Función para limpiar todos los datos
   const clearAllData = () => {
     setInputValues({
-      inversionPublicitaria: "0",
-      cpa: "0",
-      tasaCierre: "0",
-      precioProducto: "0",
-      costoProducto: "0",
-      gastoOperativo: "0",
-      tasaEntrega: "0",
-      comisionCourier: "0",
-      costoPorMensaje: "0",
-      tasaConversionWhatsApp: "0"
+      inversionPublicitaria: "1000",
+      cpa: "25",
+      tasaCierre: "30",
+      precioProducto: "120",
+      costoProducto: "40",
+      gastoOperativo: "15",
+      tasaEntrega: "85",
+      comisionCourier: "8",
+      costoPorMensaje: "10",
+      tasaConversionWhatsApp: "25"
     });
     setConversionData({
       inversionPublicitaria: 0,

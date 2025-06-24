@@ -31,7 +31,7 @@ export default function CalculatorSection({
   getCurrencySymbol
 }: any) {
   const derived = calculateDerivedMetrics(calcResults, inputValues);
-  const [showHeatmap, setShowHeatmap] = useState(false);
+  const [viewMode, setViewMode] = useState('normal'); // 'normal', 'heatmap', 'table'
 
   // Optimización de performance para el heatmap
   const heatmapData = useMemo(() => {
@@ -500,48 +500,271 @@ export default function CalculatorSection({
 
       {(calcResults.roi !== null) && (
         <div className="space-y-6 animate-fade-in">
-          {/* Header del Dashboard con Toggle */}
+          {/* Header del Dashboard con Toggle de 3 opciones */}
           <Card className="bg-gradient-to-r from-blue-500 to-purple-600 border-0 shadow-lg rounded-xl overflow-hidden">
             <CardContent className="p-6">
-              <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2 text-white">
+              <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 text-white">
                 <div className="text-center flex-1">
                   <h2 className="text-2xl font-bold mb-2">
-                    {showHeatmap ? '🔥 Heatmap de Profitabilidad' : '🎯 Mapa de Rentabilidad Completo'}
+                    {viewMode === 'table' ? '📊 Tabla Dinámica de Rentabilidad' : 
+                     viewMode === 'heatmap' ? '🔥 Heatmap de Profitabilidad' : 
+                     '🎯 Mapa de Rentabilidad Completo'}
                   </h2>
                   <p className="text-blue-100">
-                    {showHeatmap 
-                      ? 'Explora escenarios de rentabilidad variando CPA y Tasa de Conversión'
-                      : 'Análisis integral de tu campaña COD'
-                    }
+                    {viewMode === 'table' ? 'Explora todas las combinaciones de CPA y ganancias objetivo' :
+                     viewMode === 'heatmap' ? 'Explora escenarios de rentabilidad variando CPA y Tasa de Conversión' :
+                     'Análisis integral de tu campaña COD'}
                   </p>
                 </div>
-                {/* Botón Toggle */}
-                <div className="flex items-center justify-center md:justify-end space-x-3">
+                {/* Botones de Navegación */}
+                <div className="flex items-center justify-center md:justify-end space-x-2">
                   <Button
-                    onClick={() => setShowHeatmap(!showHeatmap)}
-                    variant="outline"
-                    className="bg-white/20 border-white/30 text-white hover:bg-white/30 transition-all duration-300 px-2 py-1 text-xs md:px-4 md:py-2 md:text-base"
+                    onClick={() => setViewMode('normal')}
+                    variant={viewMode === 'normal' ? 'default' : 'outline'}
+                    className={`px-3 py-2 text-sm transition-all duration-300 ${
+                      viewMode === 'normal' 
+                        ? 'bg-white text-blue-600 hover:bg-gray-100' 
+                        : 'bg-white/20 border-white/30 text-white hover:bg-white/30'
+                    }`}
                   >
-                    {showHeatmap ? (
-                      <>
-                        <TrendingUp className="h-4 w-4 mr-2" />
-                        <span className="hidden sm:inline">Ver Mapa Normal</span>
-                        <span className="inline sm:hidden">Normal</span>
-                      </>
-                    ) : (
-                      <>
-                        <span className="mr-1">🔥</span>
-                        <span className="hidden sm:inline">Ver Heatmap</span>
-                        <span className="inline sm:hidden">Heatmap</span>
-                      </>
-                    )}
+                    <TrendingUp className="h-4 w-4 mr-1" />
+                    <span className="hidden sm:inline">Normal</span>
+                  </Button>
+                  <Button
+                    onClick={() => setViewMode('heatmap')}
+                    variant={viewMode === 'heatmap' ? 'default' : 'outline'}
+                    className={`px-3 py-2 text-sm transition-all duration-300 ${
+                      viewMode === 'heatmap' 
+                        ? 'bg-white text-blue-600 hover:bg-gray-100' 
+                        : 'bg-white/20 border-white/30 text-white hover:bg-white/30'
+                    }`}
+                  >
+                    🔥
+                    <span className="ml-1 hidden sm:inline">Heatmap</span>
+                  </Button>
+                  <Button
+                    onClick={() => setViewMode('table')}
+                    variant={viewMode === 'table' ? 'default' : 'outline'}
+                    className={`px-3 py-2 text-sm transition-all duration-300 ${
+                      viewMode === 'table' 
+                        ? 'bg-white text-blue-600 hover:bg-gray-100' 
+                        : 'bg-white/20 border-white/30 text-white hover:bg-white/30'
+                    }`}
+                  >
+                    📊
+                    <span className="ml-1 hidden sm:inline">Tabla</span>
                   </Button>
                 </div>
               </div>
             </CardContent>
           </Card>
-          {/* Contenido Condicional */}
-          {showHeatmap ? (
+          {/* Contenido Condicional según viewMode */}
+          {viewMode === 'table' ? (
+            <div className="space-y-6">
+              {/* Guía de Interpretación */}
+              <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-pink-50 to-purple-100 pb-4">
+                  <CardTitle className="text-pink-900 font-semibold flex items-center">
+                    <div className="h-8 w-8 bg-pink-500 rounded-lg flex items-center justify-center mr-3">
+                      💡
+                    </div>
+                    Guía de Interpretación
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 text-sm">
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-emerald-600 rounded"></div>
+                      <span className="text-gray-700"><strong>ROI &gt; 50%</strong><br/>Excelente rentabilidad</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-emerald-400 rounded"></div>
+                      <span className="text-gray-700"><strong>ROI 25% - 50%</strong><br/>Buena rentabilidad</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-yellow-400 rounded"></div>
+                      <span className="text-gray-700"><strong>ROI 10% - 25%</strong><br/>Rentabilidad aceptable</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-pink-300 rounded"></div>
+                      <span className="text-gray-700"><strong>ROI 0% - 10%</strong><br/>Rentabilidad mínima</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-red-400 rounded"></div>
+                      <span className="text-gray-700"><strong>ROI -20% - 0%</strong><br/>Pérdida moderada</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 bg-red-700 rounded"></div>
+                      <span className="text-gray-700"><strong>ROI &lt; -20%</strong><br/>Pérdida significativa</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+              {/* Tabla Dinámica Principal */}
+              <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
+                <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-100 pb-4">
+                  <CardTitle className="text-purple-900 font-semibold flex items-center">
+                    <div className="h-8 w-8 bg-purple-500 rounded-lg flex items-center justify-center mr-3">
+                      📊
+                    </div>
+                    Tabla Dinámica de Rentabilidad
+                  </CardTitle>
+                  <CardDescription className="text-purple-700">
+                    Analiza diferentes CPAs vs objetivos de ganancia basado en tus datos
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs border-collapse">
+                      <thead>
+                        <tr>
+                          <th className="border border-gray-300 p-2 bg-gray-100 font-semibold">CPA ({getCurrencySymbol()})</th>
+                          {(() => {
+                            const ganancias = [42, 56, 70, 84, 98];
+                            return ganancias.map(ganancia => (
+                              <th key={ganancia} className="border border-gray-300 p-2 bg-blue-100 font-semibold text-center">
+                                Ganancia {getCurrencySymbol()}/ {ganancia}
+                                <br/>
+                                <span className="text-xs text-gray-600">Obj. ROI: {((ganancia/20)*100).toFixed(0)}%</span>
+                              </th>
+                            ));
+                          })()}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {(() => {
+                          const cpaValues = [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100];
+                          const ganancias = [42, 56, 70, 84, 98];
+                          // Datos base de la calculadora
+                          const investment = Number(inputValues.inversionPublicitaria) || 2000;
+                          const productPrice = Number(inputValues.precioProducto) || 200;
+                          const productCost = Number(inputValues.costoProducto) || 80;
+                          const operativeCost = Number(inputValues.gastoOperativo) || 20;
+                          const courierCost = Number(inputValues.comisionCourier) || 15;
+                          const deliveryRate = (Number(inputValues.tasaEntrega) || 85) / 100;
+                          const costPerOrder = productCost + operativeCost + courierCost;
+                          const getColorClass = (roi: number): string => {
+                            if (roi > 50) return 'bg-emerald-600 text-white';
+                            if (roi >= 25) return 'bg-emerald-400 text-white';
+                            if (roi >= 10) return 'bg-yellow-400 text-gray-800';
+                            if (roi >= 0) return 'bg-pink-300 text-gray-800';
+                            if (roi >= -20) return 'bg-red-400 text-white';
+                            return 'bg-red-700 text-white';
+                          };
+                          return cpaValues.map(cpa => (
+                            <tr key={cpa}>
+                              <td className="border border-gray-300 p-2 bg-gray-50 font-semibold text-center">
+                                {getCurrencySymbol()}/ {cpa}
+                              </td>
+                              {ganancias.map(gananciaBuscada => {
+                                const margenUnitario = productPrice - costPerOrder;
+                                const entregasNecesarias = (gananciaBuscada + investment) / margenUnitario;
+                                const leadsNecesarios = investment / cpa;
+                                const conversionesNecesarias = entregasNecesarias / deliveryRate;
+                                const tasaConversionNecesaria = (conversionesNecesarias / leadsNecesarios) * 100;
+                                const conversionActual = Number(inputValues.tasaCierre) || 25;
+                                const conversionsReales = leadsNecesarios * (conversionActual / 100);
+                                const entregasReales = conversionsReales * deliveryRate;
+                                const ingresoReal = entregasReales * productPrice;
+                                const costosVariables = entregasReales * costPerOrder;
+                                const gananciReal = ingresoReal - costosVariables - investment;
+                                const roiReal = (gananciReal / investment) * 100;
+                                return (
+                                  <td key={gananciaBuscada} className={`border border-gray-300 p-2 text-center ${getColorClass(roiReal)}`}>
+                                    <div className="font-semibold">{getCurrencySymbol()}/ {gananciReal.toFixed(0)}</div>
+                                    <div className="text-xs">ROI: {roiReal.toFixed(0)}%</div>
+                                    {tasaConversionNecesaria <= 100 && tasaConversionNecesaria > 0 && (
+                                      <div className="text-xs opacity-80">
+                                        Req: {tasaConversionNecesaria.toFixed(0)}%
+                                      </div>
+                                    )}
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          ));
+                        })()}
+                      </tbody>
+                    </table>
+                  </div>
+                </CardContent>
+              </Card>
+              {/* Análisis de la Tabla */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
+                  <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-100 pb-4">
+                    <CardTitle className="text-green-900 font-semibold flex items-center">
+                      <div className="h-8 w-8 bg-green-500 rounded-lg flex items-center justify-center mr-3">
+                        ✅
+                      </div>
+                      Cómo Leer la Tabla
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                        <h4 className="font-semibold text-blue-800 mb-2">📊 Interpretación</h4>
+                        <p className="text-blue-700 text-sm">
+                          Cada celda muestra la ganancia real y ROI para ese CPA con tu tasa de conversión actual ({inputValues.tasaCierre || 25}%)
+                        </p>
+                      </div>
+                      <div className="p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+                        <h4 className="font-semibold text-purple-800 mb-2">🎯 "Req: X%"</h4>
+                        <p className="text-purple-700 text-sm">
+                          Indica qué tasa de conversión necesitarías para alcanzar esa ganancia objetivo con ese CPA
+                        </p>
+                      </div>
+                      <div className="p-4 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+                        <h4 className="font-semibold text-orange-800 mb-2">🚀 Estrategia</h4>
+                        <p className="text-orange-700 text-sm">
+                          Busca celdas verdes con CPAs alcanzables y tasas de conversión realistas para tu negocio
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
+                  <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-100 pb-4">
+                    <CardTitle className="text-blue-900 font-semibold flex items-center">
+                      <div className="h-8 w-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3">
+                        💡
+                      </div>
+                      Insights Personalizados
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      <div className="p-4 bg-green-50 rounded-lg">
+                        <h4 className="font-semibold text-green-800 mb-2">🎯 Tu Situación Actual</h4>
+                        <p className="text-green-700 text-sm">
+                          CPA: {getCurrencySymbol()}{inputValues.cpa || 30} | Conversión: {inputValues.tasaCierre || 25}% | 
+                          ROI: {calcResults.roi?.toFixed(1) || 0}%
+                        </p>
+                      </div>
+                      <div className="p-4 bg-yellow-50 rounded-lg">
+                        <h4 className="font-semibold text-yellow-800 mb-2">⚡ Recomendación Inmediata</h4>
+                        <p className="text-yellow-700 text-sm">
+                          {(() => {
+                            const currentROI = calcResults.roi || 0;
+                            if (currentROI > 30) return `¡Excelente! Mantén tu CPA actual y busca escalar la inversión.`;
+                            if (currentROI > 0) return `Rentable pero mejorable. Intenta reducir CPA a ${getCurrencySymbol()}${Math.max(20, (Number(inputValues.cpa) || 30) - 10)} o aumentar conversión al ${Math.min(50, (Number(inputValues.tasaCierre) || 25) + 10)}%.`;
+                            return `No rentable. Reduce urgentemente el CPA por debajo de ${getCurrencySymbol()}${Math.round(((Number(inputValues.precioProducto) || 200) - ((Number(inputValues.costoProducto) || 80) + (Number(inputValues.gastoOperativo) || 20) + (Number(inputValues.comisionCourier) || 15))) * 0.8)}.`;
+                          })()}
+                        </p>
+                      </div>
+                      <div className="p-4 bg-purple-50 rounded-lg">
+                        <h4 className="font-semibold text-purple-800 mb-2">🚀 Zona de Escalado</h4>
+                        <p className="text-purple-700 text-sm">
+                          Para ROI {'>'}50%: CPA {'<'} {getCurrencySymbol()}25 con conversión {'>'}30%. 
+                          Esas son celdas verde oscuro en la tabla.
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          ) : viewMode === 'heatmap' ? (
             <div className="space-y-6">
               {/* Configuración del Heatmap */}
               <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
@@ -594,6 +817,15 @@ export default function CalculatorSection({
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="p-6">
+                  {/* Título responsivo manual */}
+                  <div className="text-center mb-4">
+                    <span className="block text-base font-bold text-gray-800 sm:hidden">
+                      Análisis de Rentabilidad<br />CPA vs Tasa de Conversión
+                    </span>
+                    <span className="hidden sm:block text-lg font-bold text-gray-800">
+                      Análisis de Rentabilidad - Variación de CPA vs Tasa de Conversión
+                    </span>
+                  </div>
                   <ReactApexChart
                     options={{
                       chart: {
@@ -646,15 +878,6 @@ export default function CalculatorSection({
                           formatter: function(val) {
                             return 'ROI: ' + Number(val).toFixed(1) + '%';
                           }
-                        }
-                      },
-                      title: {
-                        text: 'Análisis de Rentabilidad - Variación de CPA vs Tasa de Conversión',
-                        align: 'center',
-                        style: {
-                          fontSize: '16px',
-                          fontWeight: 600,
-                          color: '#374151'
                         }
                       }
                     }}
@@ -862,84 +1085,6 @@ export default function CalculatorSection({
                       ((Number(inputValues.comisionCourier) || 0) * (derived.entregas || 0))
                     ]}
                     type="donut"
-                    height={300}
-                  />
-                </CardContent>
-              </Card>
-              {/* Gráfico del Funnel */}
-              <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
-                <CardHeader className="bg-gradient-to-r from-green-50 to-green-100 pb-4">
-                  <CardTitle className="text-green-900 font-semibold flex items-center">
-                    <div className="h-8 w-8 bg-green-500 rounded-lg flex items-center justify-center mr-3">📊</div>
-                    Funnel de Conversión
-                  </CardTitle>
-                  <CardDescription className="text-green-700">De leads a entregas exitosas</CardDescription>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <ReactApexChart
-                    options={{
-                      chart: { type: 'bar', toolbar: { show: false } },
-                      plotOptions: { bar: { horizontal: false, borderRadius: 8, dataLabels: { position: 'top' } } },
-                      dataLabels: {
-                        enabled: true,
-                        formatter: function (val) { return Number(val).toFixed(1); },
-                        offsetY: -20,
-                        style: { fontSize: '12px', colors: ["#304758"] }
-                      },
-                      xaxis: {
-                        categories: ['Leads', 'Conversiones', 'Entregas'],
-                        labels: { style: { colors: ['#059669', '#059669', '#059669'], fontSize: '14px', fontWeight: 600 } }
-                      },
-                      yaxis: { title: { text: 'Cantidad' } },
-                      colors: ['#10b981'],
-                      grid: { borderColor: '#e5e7eb' },
-                      tooltip: { y: { formatter: (val) => Number(val).toFixed(1) + ' unidades' } },
-                    }}
-                    series={[
-                      { name: 'Cantidad', data: [derived.leads || 0, derived.conversiones || 0, derived.entregas || 0] },
-                    ]}
-                    type="bar"
-                    height={300}
-                  />
-                </CardContent>
-              </Card>
-              {/* Gráfico de Rentabilidad */}
-              <Card className="bg-white border-0 shadow-lg rounded-xl overflow-hidden">
-                <CardHeader className="bg-gradient-to-r from-purple-50 to-purple-100 pb-4">
-                  <CardTitle className="text-purple-900 font-semibold flex items-center">
-                    <div className="h-8 w-8 bg-purple-500 rounded-lg flex items-center justify-center mr-3">💰</div>
-                    Análisis Financiero
-                  </CardTitle>
-                  <CardDescription className="text-purple-700">Ingresos vs Costos vs Ganancia</CardDescription>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <ReactApexChart
-                    options={{
-                      chart: { type: 'bar', toolbar: { show: false } },
-                      plotOptions: { bar: { horizontal: false, borderRadius: 8, dataLabels: { position: 'top' } } },
-                      dataLabels: {
-                        enabled: true,
-                        formatter: function (val) { return getCurrencySymbol() + ' ' + Number(val).toFixed(0); },
-                        offsetY: -20,
-                        style: { fontSize: '12px', colors: ["#304758"] }
-                      },
-                      xaxis: {
-                        categories: ['Ingresos', 'Costos', 'Ganancia/Pérdida'],
-                        labels: { style: { fontSize: '14px', fontWeight: 600 } }
-                      },
-                      yaxis: { title: { text: `Monto (${getCurrencySymbol()})` } },
-                      colors: [
-                        '#10b981', // Ingresos
-                        '#ef4444', // Costos
-                        (Number(derived.ganancia) >= 0 ? '#10b981' : '#ef4444') // Ganancia/Pérdida
-                      ],
-                      grid: { borderColor: '#e5e7eb' },
-                      tooltip: { y: { formatter: (val) => getCurrencySymbol() + ' ' + Number(val).toFixed(2) } },
-                    }}
-                    series={[
-                      { name: 'Monto', data: [derived.ingresosTotales || 0, derived.costosTotal || 0, Math.abs(derived.ganancia || 0)] },
-                    ]}
-                    type="bar"
                     height={300}
                   />
                 </CardContent>
