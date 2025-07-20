@@ -82,7 +82,7 @@ export default function HomePage() {
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-900 mb-6 transition-all duration-500 hover:text-accent">
               Mantente al día con las últimas innovaciones
             </h2>
-            <Link href="#blog">
+            <Link href="/#blog">
               <Button
                 variant="outline"
                 className="border-accent/30 text-accent hover:bg-accent hover:text-black rounded-full px-8 py-3"
@@ -221,7 +221,7 @@ export default function HomePage() {
                 Nos comprometemos a impulsar el crecimiento de empresarios digitales y generar un impacto positivo en el
                 ecosistema del ecommerce.
               </p>
-              <Link href="#nosotros">
+              <Link href="/#nosotros">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full">
                   Más información
                 </Button>
@@ -299,7 +299,7 @@ export default function HomePage() {
                 El equipo de liderazgo de Holistic guía la empresa a medida que evolucionamos la tecnología de ecommerce
                 y la inteligencia artificial para crear la próxima evolución del comercio digital.
               </p>
-              <Link href="#equipo">
+              <Link href="/#equipo">
                 <Button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full">
                   Conoce a nuestro equipo
                 </Button>

@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ShoppingCart, Menu, ChevronDown } from "lucide-react"
 
@@ -41,7 +41,7 @@ export default function Navbar() {
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link
-                href="#servicios"
+                href="/#servicios"
                 className="text-gray-700 hover:text-blue-500 transition-all duration-300 px-2 lg:px-3 py-2 text-sm font-medium relative group"
               >
                 Servicios
@@ -86,14 +86,14 @@ export default function Navbar() {
                </div>
 
               <Link
-                href="#nosotros"
+                href="/#nosotros"
                 className="text-gray-700 hover:text-blue-500 transition-all duration-300 px-2 lg:px-3 py-2 text-sm font-medium relative group"
               >
                 Nosotros
                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
               </Link>
               <Link
-                href="#contacto"
+                href="/#contacto"
                 className="text-gray-700 hover:text-blue-500 transition-all duration-300 px-2 lg:px-3 py-2 text-sm font-medium relative group"
               >
                 Contacto
@@ -115,6 +115,7 @@ export default function Navbar() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="bg-white border-gray-200">
+                <SheetTitle className="sr-only">Menú de navegación</SheetTitle>
                 <div className="flex flex-col space-y-4 mt-8">
                   <Link
                     href="/"
@@ -123,7 +124,7 @@ export default function Navbar() {
                     Inicio
                   </Link>
                   <Link
-                    href="#servicios"
+                    href="/#servicios"
                     className="text-gray-700 hover:text-blue-500 transition-colors duration-300 text-lg font-medium"
                   >
                     Servicios
@@ -152,13 +153,13 @@ export default function Navbar() {
                    </div>
 
                   <Link
-                    href="#nosotros"
+                    href="/#nosotros"
                     className="text-gray-700 hover:text-blue-500 transition-colors duration-300 text-lg font-medium"
                   >
                     Nosotros
                   </Link>
                   <Link
-                    href="#contacto"
+                    href="/#contacto"
                     className="text-gray-700 hover:text-blue-500 transition-colors duration-300 text-lg font-medium"
                   >
                     Contacto

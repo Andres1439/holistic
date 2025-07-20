@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "export", // Importante para hosting estático
+  trailingSlash: true, // Ayuda en servidores compartido
+  
   experimental: {
     turbo: {
       rules: {
