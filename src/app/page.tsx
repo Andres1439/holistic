@@ -5,122 +5,12 @@ import { ArrowRight, ShoppingCart, Users, Menu, BarChart3, Zap, Shield, Calculat
 import Link from "next/link"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import Image from "next/image"
+import Navbar from "@/components/Navbar"
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Navbar - Meta Style pero claro */}
-      <nav className="border-b border-gray-200 bg-white sticky top-0 z-50 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <div className="flex items-center group">
-              <div className="flex-shrink-0">
-                <div className="h-8 w-8 bg-blue-100 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                  <ShoppingCart className="h-5 w-5 text-blue-700" />
-                </div>
-              </div>
-              <div className="ml-3">
-                <Link href="/">
-                <span className="text-xl font-bold text-blue-700 transition-colors duration-300 group-hover:text-blue-500">
-                  HOLISTIC
-                </span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-baseline space-x-4 lg:space-x-8">
-                <Link
-                  href="/"
-                  className="text-blue-700 hover:text-blue-500 transition-all duration-300 px-2 lg:px-3 py-2 text-sm font-medium relative group"
-                >
-                  Inicio
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                </Link>
-                <Link
-                  href="#servicios"
-                  className="text-gray-700 hover:text-blue-500 transition-all duration-300 px-2 lg:px-3 py-2 text-sm font-medium relative group"
-                >
-                  Servicios
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                </Link>
-                <Link
-                  href="/herramientas"
-                  className="text-gray-700 hover:text-blue-500 transition-all duration-300 px-2 lg:px-3 py-2 text-sm font-medium relative group"
-                >
-                  Herramientas
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                </Link>
-                <Link
-                  href="#nosotros"
-                  className="text-gray-700 hover:text-blue-500 transition-all duration-300 px-2 lg:px-3 py-2 text-sm font-medium relative group"
-                >
-                  Nosotros
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                </Link>
-                <Link
-                  href="#contacto"
-                  className="text-gray-700 hover:text-blue-500 transition-all duration-300 px-2 lg:px-3 py-2 text-sm font-medium relative group"
-                >
-                  Contacto
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <Sheet>
-                <SheetTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="text-primary-dark hover:bg-primary-medium/20 transition-colors duration-300"
-                  >
-                    <Menu className="h-6 w-6" />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent side="right" className="bg-white border-gray-200">
-                  <div className="flex flex-col space-y-4 mt-8">
-                    <Link
-                      href="#"
-                      className="text-blue-700 hover:text-blue-500 transition-colors duration-300 text-lg font-medium"
-                    >
-                      Inicio
-                    </Link>
-                    <Link
-                      href="#servicios"
-                      className="text-gray-700 hover:text-blue-500 transition-colors duration-300 text-lg font-medium"
-                    >
-                      Servicios
-                    </Link>
-                    <Link
-                      href="/herramientas"
-                      className="text-gray-700 hover:text-blue-500 transition-colors duration-300 text-lg font-medium"
-                    >
-                      Herramientas
-                    </Link>
-                    <Link
-                      href="#nosotros"
-                      className="text-gray-700 hover:text-blue-500 transition-colors duration-300 text-lg font-medium"
-                    >
-                      Nosotros
-                    </Link>
-                    <Link
-                      href="#contacto"
-                      className="text-gray-700 hover:text-blue-500 transition-colors duration-300 text-lg font-medium"
-                    >
-                      Contacto
-                    </Link>
-                  </div>
-                </SheetContent>
-              </Sheet>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero Section - Meta Style */}
       <section className="relative overflow-hidden bg-white min-h-[90vh] flex items-center justify-center">
