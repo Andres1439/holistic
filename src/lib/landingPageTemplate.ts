@@ -5,6 +5,25 @@
  * @returns Código HTML completo
  */
 export function generateLandingPageHTML(finalUrl: string, countdown: number): string {
+  // Validar y formatear la URL
+  let validUrl = finalUrl.trim();
+  
+  // Si la URL no empieza con http:// o https://, agregar https://
+  if (validUrl && !validUrl.match(/^https?:\/\//)) {
+    validUrl = 'https://' + validUrl;
+  }
+  
+  // Validar que sea una URL válida
+  let isValidUrl = false;
+  try {
+    if (validUrl) {
+      new URL(validUrl);
+      isValidUrl = true;
+    }
+  } catch (e) {
+    isValidUrl = false;
+  }
+
   return `<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -94,7 +113,8 @@ export function generateLandingPageHTML(finalUrl: string, countdown: number): st
         const actionBtn = document.getElementById('actionBtn');
         const btnText = document.getElementById('btnText');
         const handEl = document.getElementById('hand');
-        const finalUrl = '${finalUrl}';
+        const finalUrl = '${validUrl}';
+        const isValidUrl = ${isValidUrl};
         
         let secondsLeft = ${countdown};
 
@@ -110,18 +130,27 @@ export function generateLandingPageHTML(finalUrl: string, countdown: number): st
                 btnText.textContent = 'IR A LA OFERTA AHORA';
                 handEl.classList.remove('hidden');
                 
-                // Auto-redirect después de mostrar el botón
-                setTimeout(() => {
-                    if (finalUrl) {
-                        window.location.href = finalUrl;
-                    }
-                }, 500);
+                // Auto-redirect después de mostrar el botón (solo si la URL es válida)
+                if (isValidUrl && finalUrl) {
+                    setTimeout(() => {
+                        try {
+                            window.location.href = finalUrl;
+                        } catch (e) {
+                            console.error('Error al redirigir:', e);
+                        }
+                    }, 500);
+                }
             }
         }, 1000);
 
         actionBtn.onclick = () => {
-            if (!actionBtn.disabled && finalUrl) {
-                window.location.href = finalUrl;
+            if (!actionBtn.disabled && isValidUrl && finalUrl) {
+                try {
+                    window.location.href = finalUrl;
+                } catch (e) {
+                    console.error('Error al redirigir:', e);
+                    alert('Error: URL no válida');
+                }
             }
         };
     <\/script>

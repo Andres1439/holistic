@@ -99,7 +99,7 @@ export default function CompetidoresPage() {
     }
 
     setIsAnalyzing(true)
-    setAnalysis("🚀 Iniciando análisis de productos competidores...\n\n")
+    setAnalysis("🚀 Iniciando análisis de enlaces de competidores...\n\n")
 
     // Actualizar estado de enlaces a loading
     setCompetitorLinks(prev => 
@@ -228,30 +228,13 @@ Reinicia el servidor después de configurar la variable.`)
       const result = await response.json()
 
       if (result.success) {
-        setFacebookCopy(result.copy || 'No se pudo generar el copy de Facebook')
+        setFacebookCopy(result.facebook_copy || 'No se pudo generar el copy de Facebook')
       } else {
-        setFacebookCopy(`❌ ERROR AL GENERAR COPY
-
-${result.error}
-
-POSIBLES SOLUCIONES:
-1. Verifica que el texto base sea válido
-2. Revisa que OpenAI API esté configurado correctamente
-3. Intenta con un texto más descriptivo`)
+        setFacebookCopy(`❌ ERROR AL GENERAR COPY\n\n${result.error || ''}\n\nPOSIBLES SOLUCIONES:\n1. Verifica que el texto base sea válido\n2. Revisa que OpenAI API esté configurado correctamente\n3. Intenta con un texto más descriptivo`)
       }
 
     } catch (error: any) {
-      setFacebookCopy(`❌ ERROR INESPERADO
-
-${error.message}
-
-POSIBLES CAUSAS:
-• Problema de conectividad
-• Límites de API alcanzados
-• Configuración incorrecta de OpenAI API
-
-SOLUCIÓN:
-Revisa la consola del navegador para más detalles.`)
+      setFacebookCopy(`❌ ERROR INESPERADO\n\n${error.message}\n\nPOSIBLES CAUSAS:\n• Problema de conectividad\n• Límites de API alcanzados\n• Configuración incorrecta de OpenAI API\n\nSOLUCIÓN:\nRevisa la consola del navegador para más detalles.`)
     } finally {
       setIsGeneratingFacebook(false)
     }
@@ -317,40 +300,12 @@ Revisa la consola del navegador para más detalles.`)
           {/* Header */}
           <div className="text-center mb-8 lg:mb-12">
             <h1 className="text-3xl lg:text-5xl font-extrabold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4 tracking-tight">
-              Parafraseador de Productos
+              Parafraseador de Competidores
             </h1>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">
               Analiza productos de tus competidores y genera copy parafraseado automáticamente con IA
             </p>
           </div>
-
-          {/* Estadísticas de uso si están disponibles */}
-          {analysisStats && (
-            <div className="mb-8">
-              <Card className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 border-purple-500/30">
-                <CardContent className="pt-6">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                    <div>
-                      <div className="text-2xl font-bold text-green-400">{analysisStats.successful}</div>
-                      <div className="text-sm text-gray-400">Exitosos</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-red-400">{analysisStats.failed}</div>
-                      <div className="text-sm text-gray-400">Fallidos</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-blue-400">{analysisStats.usage?.requests_used || 0}</div>
-                      <div className="text-sm text-gray-400">Requests Usados</div>
-                    </div>
-                    <div>
-                      <div className="text-2xl font-bold text-purple-400">{analysisStats.usage?.requests_remaining || 0}</div>
-                      <div className="text-sm text-gray-400">Remaining</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
 
           {/* Interface Toggle */}
           <div className="flex justify-center mb-8">
@@ -360,7 +315,7 @@ Revisa la consola del navegador para más detalles.`)
                   value="links" 
                   className="data-[state=active]:bg-purple-500 text-white"
                 >
-                  🎯 Parafraseador de Productos
+                  🎯 Parafraseador
                 </TabsTrigger>
                 <TabsTrigger 
                   value="bulk" 
@@ -380,10 +335,10 @@ Revisa la consola del navegador para más detalles.`)
                 <Card className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-sm border-gray-700/50">
                   <CardHeader>
                     <CardTitle className="text-xl text-gray-200 flex items-center gap-2">
-                      🎯 Agregar Productos de Competidores
+                      🎯 Agregar enlaces de Competidores
                     </CardTitle>
                     <CardDescription className="text-gray-400">
-                      Agrega hasta 5 enlaces de productos para generar copy parafraseado
+                      Agrega hasta 5 enlaces para generar copy parafraseado.
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -412,23 +367,14 @@ Revisa la consola del navegador para más detalles.`)
                       </Button>
                     </div>
                     <p className="text-xs text-gray-500">
-                      {competitorLinks.length}/5 productos agregados
+                      {competitorLinks.length}/5 enlaces agregados
                     </p>
-                    <div className="text-xs text-gray-400 mt-2 p-2 bg-gray-800/50 rounded">
-                      <p className="font-semibold mb-1">💡 URLs recomendadas:</p>
-                      <ul className="space-y-1 text-xs">
-                        <li>• Amazon: https://amazon.com/dp/PRODUCT_ID</li>
-                        <li>• MercadoLibre: https://mercadolibre.com.ar/ITEM_ID</li>
-                        <li>• eBay: https://ebay.com/itm/ITEM_ID</li>
-                        <li>• Evita sitios con autenticación o captchas</li>
-                      </ul>
-                    </div>
                   </div>
 
                   {/* Lista de enlaces agregados */}
                   {competitorLinks.length > 0 && (
                     <div className="space-y-2">
-                      <Label className="text-gray-300">Productos a Analizar:</Label>
+                      <Label className="text-gray-300">Enlaces a Analizar:</Label>
                       <div className="space-y-2">
                         {competitorLinks.map((link) => (
                           <div key={link.id} className={`flex items-center gap-2 p-3 rounded-lg transition-all duration-200 ${getStatusColor(link.status)}`}>
@@ -474,7 +420,7 @@ Revisa la consola del navegador para más detalles.`)
                     {isAnalyzing ? (
                       <>
                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Analizando Productos...
+                        Analizando enlaces...
                       </>
                     ) : (
                       <>
@@ -483,17 +429,6 @@ Revisa la consola del navegador para más detalles.`)
                     )}
                   </Button>
 
-                  {/* Información de APIs */}
-                  <div className="mt-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                    <div className="text-sm text-blue-300">
-                      <div className="font-semibold mb-1">📋 Configuración:</div>
-                      <div className="text-xs space-y-1">
-                        <div>• ScraperAPI: Configurado en servidor</div>
-                        <div>• OpenAI API: {process.env.NEXT_PUBLIC_OPENAI_API_KEY ? '✅ Configurado' : '❌ No configurado'}</div>
-                        <div>• Next.js: v15 App Router ✅</div>
-                      </div>
-                    </div>
-                  </div>
                 </CardContent>
               </Card>
               ) : (
@@ -544,16 +479,6 @@ Revisa la consola del navegador para más detalles.`)
                       )}
                     </Button>
 
-                    {/* Información de APIs */}
-                    <div className="mt-4 p-3 bg-pink-500/10 border border-pink-500/20 rounded-lg">
-                      <div className="text-sm text-pink-300">
-                        <div className="font-semibold mb-1">📋 Configuración:</div>
-                        <div className="text-xs space-y-1">
-                          <div>• OpenAI API: {process.env.NEXT_PUBLIC_OPENAI_API_KEY ? '✅ Configurado' : '❌ No configurado'}</div>
-                          <div>• Next.js: v15 App Router ✅</div>
-                        </div>
-                      </div>
-                    </div>
                   </CardContent>
                 </Card>
               )}
@@ -613,9 +538,9 @@ Revisa la consola del navegador para más detalles.`)
             <div className="text-sm text-gray-500 max-w-3xl mx-auto">
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="text-left">
-                  <h4 className="font-semibold text-gray-300 mb-2">🎯 Parafraseador de Productos:</h4>
+                  <h4 className="font-semibold text-gray-300 mb-2">🎯 Parafraseador de Enlaces:</h4>
                   <p className="text-xs">
-                    Analiza hasta 5 productos de competidores y genera copy parafraseado 
+                    Analiza hasta 5 enlaces de competidores y genera copy parafraseado 
                     optimizado para diferentes enfoques de marketing.
                   </p>
                 </div>
