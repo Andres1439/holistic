@@ -29,7 +29,7 @@ export default function CompetidoresPage() {
   const [analysisStats, setAnalysisStats] = useState<any>(null)
   const [facebookCopy, setFacebookCopy] = useState("")
   const [isGeneratingFacebook, setIsGeneratingFacebook] = useState(false)
-
+  const [customInstructions, setCustomInstructions] = useState("")
 
 
   const addLink = () => {
@@ -66,6 +66,7 @@ export default function CompetidoresPage() {
     setCompetitorLinks([])
     setAnalysis("")
     setAnalysisStats(null)
+    setCustomInstructions("")
   }
 
   const copyAnalysis = async () => {
@@ -113,7 +114,10 @@ export default function CompetidoresPage() {
       const response = await fetch('https://rough-thunder-2dca.andres-st1803.workers.dev/analyze-competitors', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ urls })
+        body: JSON.stringify({ 
+          urls,
+          customInstructions: customInstructions.trim() || undefined
+        })
       })
 
       const result = await response.json()
@@ -408,6 +412,26 @@ Reinicia el servidor después de configurar la variable.`)
                       >
                         Limpiar Todos
                       </Button>
+                    </div>
+                  )}
+
+                  {/* Instrucciones personalizadas */}
+                  {competitorLinks.length > 0 && (
+                    <div className="space-y-2">
+                      <Label htmlFor="customInstructions" className="text-gray-300">
+                        🎨 Instrucciones Personalizadas (Opcional)
+                      </Label>
+                      <Textarea
+                        id="customInstructions"
+                        value={customInstructions}
+                        onChange={(e) => setCustomInstructions(e.target.value)}
+                        placeholder="Ejemplo: 'Quiero que aparezcan emojis', 'Haz el copy más emocional', 'Incluye hashtags', 'Enfócate en los beneficios'..."
+                        className="min-h-[80px] bg-gray-900 border-gray-700 text-white placeholder:text-gray-500 focus:border-purple-400 resize-none"
+                        disabled={isAnalyzing}
+                      />
+                      <p className="text-xs text-gray-500">
+                        Personaliza cómo quieres que se genere el copy parafraseado
+                      </p>
                     </div>
                   )}
 
