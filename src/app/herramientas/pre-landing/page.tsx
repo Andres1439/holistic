@@ -74,7 +74,7 @@ const LandingPageModal = ({ countdown, finalUrl, isActive }: { countdown: number
   )
 }
 
-export default function DemoPage() {
+export default function PreLandingPage() {
   const [finalUrl, setFinalUrl] = useState("")
   const [countdown, setCountdown] = useState(5)
   const [activeDevice, setActiveDevice] = useState("desktop")
@@ -169,7 +169,7 @@ export default function DemoPage() {
             <div className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-sm p-6 lg:p-8 rounded-2xl shadow-2xl border border-gray-700/50 xl:sticky xl:top-6 h-full flex flex-col">
               
               <h1 className="text-2xl lg:text-3xl xl:text-4xl font-extrabold bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent mb-6 lg:mb-8 text-center tracking-tight">
-                Enmascar Landing Page
+                Enmascarar Landing Page
               </h1>
 
               {/* URL Input */}

@@ -76,10 +76,10 @@ export default function Navbar() {
                        Dashboard
                      </Link>
                      <Link
-                       href="/herramientas/demo"
+                       href="/herramientas/pre-landing"
                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors duration-200"
                      >
-                       Demo
+                       Pre-Landing
                      </Link>
                      <Link
                        href="/herramientas/competidores"
@@ -149,9 +149,9 @@ export default function Navbar() {
                              Dashboard
                            </Link>
                          </SelectItem>
-                         <SelectItem value="demo">
-                           <Link href="/herramientas/demo" className="block w-full">
-                             Demo
+                         <SelectItem value="pre-landing">
+                           <Link href="/herramientas/pre-landing" className="block w-full">
+                             Pre-Landing
                            </Link>
                          </SelectItem>
                          <SelectItem value="competidores">
